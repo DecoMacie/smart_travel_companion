@@ -11,6 +11,7 @@ import TripDetails from "./pages/dashboard/TripDetails";
 import AddTrip from "./pages/dashboard/AddTrip";
 import TripsList from "./pages/dashboard/TripsList";
 import Home from "./pages/dashboard/Home";
+import Settings from "./pages/settings/Settings";
 
 function App() {
   return (
@@ -52,6 +53,14 @@ function App() {
           element={
             <MainLayout title="My Trips">
               <TripsList />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <MainLayout title="Settings" showBack>
+              <Settings />
             </MainLayout>
           }
         />
