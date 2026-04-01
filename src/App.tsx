@@ -11,7 +11,7 @@ import TripDetails from "./pages/dashboard/TripDetails";
 import AddTrip from "./pages/dashboard/AddTrip";
 import TripsList from "./pages/dashboard/TripsList";
 import Home from "./pages/dashboard/Home";
-import Settings from "./pages/settings/Settings";
+import Settings from "./pages/settings/settings";
 
 function App() {
   return (
