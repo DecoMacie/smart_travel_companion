@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/vite.png";
 
 interface HeaderProps {
   title: string;
@@ -16,20 +17,28 @@ const Header: React.FC<HeaderProps> = ({ title, showBack = false }) => {
         {showBack && (
           <button
             onClick={() => navigate(-1)}
-            className="text-gray-600 text-2xl"
+            className="text-gray-600 text-2xl mt-25  hover:cursor-pointer"
           >
             ←
           </button>
         )}
       </div>
-      <h1 className="text-xl font-semibold">{title}</h1>
+
+      {/* Middle side: Hero and title */}
+      <div className="flex flex-col items-center">
+        <img src={logo} className="w-48 h-auto" alt="Company Logo"></img>
+        <h1 className="text-xl font-semibold">{title}</h1>
+      </div>
+
       {/* Right side: Settings icon */}
-      <button
-        onClick={() => navigate("/settings")}
-        className="text-gray-600 text-xl hover:text-gray-800 transition"
-      >
-        ⚙️
-      </button>
+      <div>
+        <button
+          onClick={() => navigate("/settings")}
+          className="text-gray-600 text-xl mt-25  hover:cursor-pointer"
+        >
+          ⚙️
+        </button>
+      </div>
     </div>
   );
 };

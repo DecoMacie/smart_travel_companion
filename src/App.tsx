@@ -11,7 +11,8 @@ import TripDetails from "./pages/dashboard/TripDetails";
 import AddTrip from "./pages/dashboard/AddTrip";
 import TripsList from "./pages/dashboard/TripsList";
 import Home from "./pages/dashboard/Home";
-import Settings from "./pages/settings/settings";
+import Settings from "./pages/settings/Settings";
+import ChangePassword from "./components/settings/ChangePassword";
 
 function App() {
   return (
@@ -61,6 +62,14 @@ function App() {
           element={
             <MainLayout title="Settings" showBack>
               <Settings />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/settings/password"
+          element={
+            <MainLayout title="Change Password" showBack>
+              <ChangePassword />
             </MainLayout>
           }
         />

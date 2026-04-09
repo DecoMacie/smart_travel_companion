@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getTripById, Trip } from "../../services/firebase/trips";
+import TripMap from "../../components/map/TripMap";
+import { geocodeLocation } from "../../utils/geocode";
+// import { Place } from "../../utils/types";
 
 const TripDetails: React.FC = () => {
   const { id } = useParams();
@@ -9,6 +12,17 @@ const TripDetails: React.FC = () => {
   const [trip, setTrip] = useState<Trip | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(
+    null,
+  );
+
+  useEffect(() => {
+    if (trip?.destination) {
+      geocodeLocation(trip.destination).then((result) => {
+        if (result) setCoords(result);
+      });
+    }
+  }, [trip]);
 
   useEffect(() => {
     let isMounted = true;
@@ -82,8 +96,17 @@ const TripDetails: React.FC = () => {
       {/* Map Placeholder */}
       <div className="mt-6 p-4 bg-white rounded-xl shadow">
         <h2 className="text-xl font-semibold mb-2">Location</h2>
-        <div className="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
-          Map coming soon
+        <div>
+          {coords?.lat && coords?.lon ? (
+            <TripMap
+              lat={coords.lat}
+              lon={coords.lon}
+              destination={trip.destination}
+              places={trip.places || []}
+            />
+          ) : (
+            <p>Loading map...</p>
+          )}
         </div>
       </div>
     </div>

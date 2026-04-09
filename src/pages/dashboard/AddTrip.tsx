@@ -1,18 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 import { auth } from "../../services/firebase/firebase";
 import { createTrip } from "../../services/firebase/trips";
+import countriesData from "../../assets/travelcountries.json";
+
+interface CountryOption {
+  value: string; // country code
+  label: string; // country name
+}
 
 const AddTrip: React.FC = () => {
   const navigate = useNavigate();
   const user = auth.currentUser;
 
   const [title, setTitle] = useState("");
-  const [destination, setDestination] = useState("");
+  const [destination, setDestination] = useState<CountryOption | null>(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const DESTINATIONS: CountryOption[] = countriesData.countries.map((c) => ({
+    value: c.code,
+    label: c.name,
+  }));
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,15 +41,30 @@ const AddTrip: React.FC = () => {
       return;
     }
 
+    if (new Date(endDate) < new Date(startDate)) {
+      setError("End date cannot be before start date.");
+      return;
+    }
+
+    setLoading(true);
+
     try {
       await createTrip({
         userId: user.uid,
         title,
-        destination,
+        destination: destination.label, // change createTrip to store country code and label
         startDate,
         endDate,
         notes,
+        places: [],
       });
+
+      // Reset form
+      setTitle("");
+      setDestination(null);
+      setStartDate("");
+      setEndDate("");
+      setNotes("");
 
       navigate("/trips");
     } catch (err) {
@@ -45,6 +73,8 @@ const AddTrip: React.FC = () => {
       } else {
         setError("Failed to add trip.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -65,7 +95,7 @@ const AddTrip: React.FC = () => {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full border px-3 py-2 rounded-lg"
+              className="w-full border border-gray-300 px-3 py-2 rounded-sm"
               placeholder="e.g., Paris Getaway"
             />
           </div>
@@ -75,12 +105,14 @@ const AddTrip: React.FC = () => {
             <label className="block text-sm font-medium mb-1">
               Destination
             </label>
-            <input
-              type="text"
+            <Select
+              options={DESTINATIONS}
               value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-              className="w-full border px-3 py-2 rounded-lg"
-              placeholder="e.g., Paris, France"
+              onChange={(option) => setDestination(option as CountryOption)}
+              placeholder="Select a destination"
+              isSearchable
+              className="basic-single"
+              classNamePrefix="select"
             />
           </div>
 
@@ -91,7 +123,7 @@ const AddTrip: React.FC = () => {
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="w-full border px-3 py-2 rounded-lg"
+              className="w-full border border-gray-300 px-3 py-2 rounded-sm"
             />
           </div>
 
@@ -101,7 +133,7 @@ const AddTrip: React.FC = () => {
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="w-full border px-3 py-2 rounded-lg"
+              className="w-full border border-gray-300 px-3 py-2 rounded-sm"
             />
           </div>
 
@@ -113,7 +145,7 @@ const AddTrip: React.FC = () => {
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full border px-3 py-2 rounded-lg"
+              className="w-full border border-gray-300 px-3 py-2 rounded-sm"
               rows={3}
               placeholder="Anything you want to remember for this trip..."
             />
@@ -121,9 +153,10 @@ const AddTrip: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 rounded-sm hover:bg-blue-700 transition disabled:opacity-50"
           >
-            Create Trip
+            {loading ? "Creating..." : "Create Trip"}
           </button>
         </form>
       </div>

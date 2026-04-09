@@ -2,15 +2,22 @@ import React, { useState } from "react";
 import { auth } from "../../services/firebase/firebase";
 import { updateUser } from "../../services/firebase/user";
 import { useNavigate } from "react-router-dom";
+import type { TravelStyle } from "../../services/firebase/user";
 
 const Preferences: React.FC = () => {
   const navigate = useNavigate();
   const user = auth.currentUser;
 
-  const [style, setStyle] = useState("");
+  const [style, setStyle] = useState<TravelStyle | null>(null);
   const [tripLength, setTripLength] = useState("");
   const [interests, setInterests] = useState<string[]>([]);
   const [error, setError] = useState("");
+
+  const styleOptions: TravelStyle[] = [
+    { id: "Budget", hotelVal: "hostel", ticketVal: "economy" },
+    { id: "Standard", hotelVal: "hostel", ticketVal: "economy" },
+    { id: "Luxury", hotelVal: "5-star", ticketVal: "Business" },
+  ];
 
   const toggleInterest = (interest: string) => {
     setInterests((prev) =>
@@ -26,6 +33,10 @@ const Preferences: React.FC = () => {
 
     if (!user) {
       setError("User not logged in.");
+      return;
+    }
+    if (!style) {
+      setError("Please select a travel style.");
       return;
     }
 
@@ -64,18 +75,18 @@ const Preferences: React.FC = () => {
               Travel Style
             </label>
             <div className="grid grid-cols-3 gap-2">
-              {["Budget", "Standard", "Luxury"].map((option) => (
+              {styleOptions.map((option) => (
                 <button
                   type="button"
-                  key={option}
+                  key={option.id}
                   onClick={() => setStyle(option)}
                   className={`py-2 rounded-lg border ${
-                    style === option
+                    style?.id === option.id
                       ? "bg-blue-600 text-white border-blue-600"
                       : "bg-white text-gray-700"
                   }`}
                 >
-                  {option}
+                  {option.id}
                 </button>
               ))}
             </div>

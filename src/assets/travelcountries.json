@@ -1,0 +1,3285 @@
+{
+  "countries": [
+    {
+      "name": "Afghanistan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Albania",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Algeria",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Andorra",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Angola",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Antigua and Barbuda",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Argentina",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Armenia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Australia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Austria",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Azerbaijan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Bahamas",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Bahrain",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Bangladesh",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Barbados",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Belarus",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Belgium",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Belize",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Benin",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Bhutan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Bolivia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Bosnia and Herzegovina",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Botswana",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Brazil",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Brunei",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Bulgaria",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Burkina Faso",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Burundi",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Cabo Verde",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Cambodia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Cameroon",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Canada",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Central African Republic",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Chad",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Chile",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "China",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Colombia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Comoros",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Congo (Congo-Brazzaville)",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Costa Rica",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Croatia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Cuba",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Cyprus",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Czechia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Democratic Republic of the Congo",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Denmark",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Djibouti",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Dominica",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Dominican Republic",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Ecuador",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Egypt",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "El Salvador",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Equatorial Guinea",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Eritrea",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Estonia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Eswatini",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Ethiopia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Fiji",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Finland",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "France",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Gabon",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Gambia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Georgia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Germany",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Ghana",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Greece",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Grenada",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Guatemala",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Guinea",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Guinea-Bissau",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Guyana",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Haiti",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Honduras",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Hungary",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Iceland",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "India",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Indonesia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Iran",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Iraq",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Ireland",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Israel",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Italy",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Jamaica",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Japan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Jordan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Kazakhstan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Kenya",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Kiribati",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Kuwait",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Kyrgyzstan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Laos",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Latvia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Lebanon",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Lesotho",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Liberia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Libya",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Liechtenstein",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Lithuania",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Luxembourg",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Madagascar",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Malawi",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Malaysia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Maldives",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Mali",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Malta",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Marshall Islands",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Mauritania",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Mauritius",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Mexico",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Micronesia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Moldova",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Monaco",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Mongolia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Montenegro",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Morocco",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Mozambique",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Myanmar",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Namibia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Nauru",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Nepal",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Netherlands",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "New Zealand",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Nicaragua",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Niger",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Nigeria",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "North Korea",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "North Macedonia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Norway",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Oman",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Pakistan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Palau",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Palestine State",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Panama",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Papua New Guinea",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Paraguay",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Peru",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Philippines",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Poland",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Portugal",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Qatar",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Romania",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Russia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Rwanda",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Saint Kitts and Nevis",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Saint Lucia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Saint Vincent and the Grenadines",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Samoa",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "San Marino",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Sao Tome and Principe",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Saudi Arabia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Senegal",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Serbia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Seychelles",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Sierra Leone",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Singapore",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Slovakia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Slovenia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Solomon Islands",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Somalia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "South Africa",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "South Korea",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "South Sudan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Spain",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Sri Lanka",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Sudan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Suriname",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Sweden",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Switzerland",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Syria",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Tajikistan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Tanzania",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Thailand",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Timor-Leste",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Togo",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Tonga",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Trinidad and Tobago",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Tunisia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Turkey",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Turkmenistan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Tuvalu",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Uganda",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Ukraine",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "United Arab Emirates",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "United Kingdom",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "United States",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Uruguay",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Uzbekistan",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Vanuatu",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Venezuela",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Vietnam",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Yemen",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Zambia",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    },
+    {
+      "name": "Zimbabwe",
+      "code": "",
+      "alpha3": "",
+      "region": "",
+      "subregion": "",
+      "capital": "",
+      "latlng": [],
+      "currency": {
+        "code": "",
+        "name": ""
+      },
+      "languages": [],
+      "flag": "",
+      "popularCities": [],
+      "airports": []
+    }
+  ]
+}

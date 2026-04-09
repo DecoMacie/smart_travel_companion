@@ -1,4 +1,5 @@
 import { db } from "./firebase";
+import { Place } from "../../utils/types";
 import {
   collection,
   addDoc,
@@ -20,6 +21,7 @@ export interface Trip {
   startDate: string;
   endDate: string;
   notes?: string;
+  places?: Place[]
 }
 
 // Fetch all trips for a specific user
