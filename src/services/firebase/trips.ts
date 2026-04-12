@@ -12,12 +12,18 @@ import {
   where
 } from "firebase/firestore";
 
+interface Destination {
+  name: string; // "Paris, France"
+  lat: number;
+  lon: number;
+}
+
 // Trip type definition
 export interface Trip {
   id: string;
   userId: string;
   title: string;
-  destination: string;
+  destination: Destination
   startDate: string;
   endDate: string;
   notes?: string;

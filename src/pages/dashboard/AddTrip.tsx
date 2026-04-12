@@ -4,10 +4,11 @@ import Select from "react-select";
 import { auth } from "../../services/firebase/firebase";
 import { createTrip } from "../../services/firebase/trips";
 import countriesData from "../../assets/travelcountries.json";
+import { geocodeLocation } from "../../utils/geocode";
 
 interface CountryOption {
-  value: string; // country code
-  label: string; // country name
+  value: string;
+  label: string;
 }
 
 const AddTrip: React.FC = () => {
@@ -16,6 +17,7 @@ const AddTrip: React.FC = () => {
 
   const [title, setTitle] = useState("");
   const [destination, setDestination] = useState<CountryOption | null>(null);
+  const [city, setCity] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [notes, setNotes] = useState("");
@@ -36,7 +38,7 @@ const AddTrip: React.FC = () => {
       return;
     }
 
-    if (!title || !destination || !startDate || !endDate) {
+    if (!title || !destination || !city || !startDate || !endDate) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -49,10 +51,25 @@ const AddTrip: React.FC = () => {
     setLoading(true);
 
     try {
+      const fullLocation = `${city}, ${destination.label}`;
+
+      // ✅ Geocode BEFORE saving
+      const coords = await geocodeLocation(fullLocation);
+
+      if (!coords) {
+        setError("Could not find this location.");
+        setLoading(false);
+        return;
+      }
+
       await createTrip({
         userId: user.uid,
         title,
-        destination: destination.label, // change createTrip to store country code and label
+        destination: {
+          name: fullLocation,
+          lat: coords.lat,
+          lon: coords.lon,
+        },
         startDate,
         endDate,
         notes,
@@ -62,6 +79,7 @@ const AddTrip: React.FC = () => {
       // Reset form
       setTitle("");
       setDestination(null);
+      setCity("");
       setStartDate("");
       setEndDate("");
       setNotes("");
@@ -105,14 +123,21 @@ const AddTrip: React.FC = () => {
             <label className="block text-sm font-medium mb-1">
               Destination
             </label>
+
             <Select
               options={DESTINATIONS}
               value={destination}
               onChange={(option) => setDestination(option as CountryOption)}
-              placeholder="Select a destination"
+              placeholder="Select a country"
               isSearchable
-              className="basic-single"
-              classNamePrefix="select"
+            />
+
+            <input
+              type="text"
+              placeholder="City (e.g., Paris)"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="w-full border border-gray-300 px-3 py-2 rounded-sm mt-2"
             />
           </div>
 

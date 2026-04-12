@@ -2,27 +2,36 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getTripById, Trip } from "../../services/firebase/trips";
 import TripMap from "../../components/map/TripMap";
-import { geocodeLocation } from "../../utils/geocode";
-// import { Place } from "../../utils/types";
+import AddPlaceModal from "../../components/places/AddPlaceModal";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../services/firebase/firebase";
+import { Place } from "../../utils/types";
 
 const TripDetails: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [trip, setTrip] = useState<Trip | null>(null);
+  const [places, setPlaces] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showPlaceModal, setShowPlaceModal] = useState(false);
   const [error, setError] = useState("");
-  const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(
-    null,
-  );
 
-  useEffect(() => {
-    if (trip?.destination) {
-      geocodeLocation(trip.destination).then((result) => {
-        if (result) setCoords(result);
-      });
+  const loadPlaces = async (tripId: string) => {
+    try {
+      const ref = collection(db, "trips", tripId, "places");
+      const snapshot = await getDocs(ref);
+
+      const list: Place[] = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<Place, "id">),
+      }));
+
+      setPlaces(list);
+    } catch {
+      setError("Failed to load places.");
     }
-  }, [trip]);
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -35,7 +44,6 @@ const TripDetails: React.FC = () => {
 
       try {
         const data = await getTripById(id);
-        console.log(data);
         if (isMounted) setTrip(data);
       } catch {
         if (isMounted) setError("Failed to load trip.");
@@ -50,6 +58,12 @@ const TripDetails: React.FC = () => {
       isMounted = false;
     };
   }, [id]);
+
+  useEffect(() => {
+    if (trip?.id) {
+      loadPlaces(trip.id);
+    }
+  }, [trip]);
 
   if (loading) {
     return <p className="p-6 text-gray-500">Loading trip details…</p>;
@@ -73,9 +87,8 @@ const TripDetails: React.FC = () => {
     <div className="min-h-screen bg-gray-50 p-6">
       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-      {/* Trip Header */}
       <h1 className="text-3xl font-semibold mb-2">{trip.title}</h1>
-      <p className="text-gray-600 text-lg">{trip.destination}</p>
+      <p className="text-gray-600 text-lg">{trip.destination.name}</p>
 
       {/* Dates */}
       <div className="mt-4 p-4 bg-white rounded-xl shadow">
@@ -93,21 +106,31 @@ const TripDetails: React.FC = () => {
         </div>
       )}
 
-      {/* Map Placeholder */}
+      {/* Map */}
       <div className="mt-6 p-4 bg-white rounded-xl shadow">
         <h2 className="text-xl font-semibold mb-2">Location</h2>
-        <div>
-          {coords?.lat && coords?.lon ? (
-            <TripMap
-              lat={coords.lat}
-              lon={coords.lon}
-              destination={trip.destination}
-              places={trip.places || []}
-            />
-          ) : (
-            <p>Loading map...</p>
-          )}
-        </div>
+
+        <button
+          onClick={() => setShowPlaceModal(true)}
+          className="mb-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        >
+          + Add Place
+        </button>
+
+        {showPlaceModal && (
+          <AddPlaceModal
+            tripId={trip.id}
+            onClose={() => setShowPlaceModal(false)}
+            onAdded={() => loadPlaces(trip.id)}
+          />
+        )}
+
+        <TripMap
+          lat={trip.destination.lat}
+          lon={trip.destination.lon}
+          destination={trip.destination.name}
+          places={places}
+        />
       </div>
     </div>
   );

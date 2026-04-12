@@ -1,6 +1,14 @@
-import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import React, { useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
+import { Place } from "../../utils/types";
+
+interface TripMapProps {
+  lat: number;
+  lon: number;
+  destination: string;
+  places: Place[];
+}
 
 const icons: Record<string, L.Icon> = {
   attraction: new L.Icon({
@@ -25,24 +33,28 @@ const icons: Record<string, L.Icon> = {
   }),
 };
 
-interface Place {
-  id: string;
-  lat: number;
-  lon: number;
-  name: string;
-  type: "attraction" | "hotel" | "restaurant" | string;
-}
+const FitBounds: React.FC<{ lat: number; lon: number; places: Place[] }> = ({
+  lat,
+  lon,
+  places,
+}) => {
+  const map = useMap();
 
-interface TripMapProps {
-  lat: number;
-  lon: number;
-  destination: string;
-  places: Place[];
-}
+  useEffect(() => {
+    const bounds = L.latLngBounds([
+      [lat, lon] as [number, number],
+      ...places.map((p) => [p.lat, p.lon] as [number, number]),
+    ]);
+
+    map.fitBounds(bounds, { padding: [50, 50] });
+  }, [lat, lon, places, map]);
+
+  return null;
+};
 
 const TripMap: React.FC<TripMapProps> = ({ lat, lon, destination, places }) => {
   return (
-    <div className="w-full h-72 rounded-xl overflow-hidden shadow">
+    <div className="w-full h-72 rounded-xl overflow-hidden shadow z-0">
       <MapContainer
         center={[lat, lon]}
         zoom={12}
@@ -54,17 +66,19 @@ const TripMap: React.FC<TripMapProps> = ({ lat, lon, destination, places }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* Main destination marker */}
+        <FitBounds lat={lat} lon={lon} places={places} />
+
+        {/* Destination */}
         <Marker position={[lat, lon]} icon={icons.default}>
           <Popup>{destination}</Popup>
         </Marker>
 
-        {/* Additional places */}
+        {/* Places */}
         {places.map((p) => (
           <Marker
             key={p.id}
             position={[p.lat, p.lon]}
-            icon={icons[p.type] || icons.default}
+            icon={icons[p.type] ?? icons.default}
           >
             <Popup>
               <strong>{p.name}</strong>
