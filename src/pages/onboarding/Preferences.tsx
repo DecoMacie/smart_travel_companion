@@ -35,6 +35,7 @@ const Preferences: React.FC = () => {
       setError("User not logged in.");
       return;
     }
+
     if (!style) {
       setError("Please select a travel style.");
       return;

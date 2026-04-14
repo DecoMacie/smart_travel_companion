@@ -3,9 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getTripById, Trip } from "../../services/firebase/trips";
 import TripMap from "../../components/map/TripMap";
 import AddPlaceModal from "../../components/places/AddPlaceModal";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../services/firebase/firebase";
 import { Place } from "../../utils/types";
+import PlaceCard from "../../components/places/PlaceCard";
+import FlightPricesCard from "../../components/flights/FlightPricesCard";
 
 const TripDetails: React.FC = () => {
   const { id } = useParams();
@@ -16,6 +18,19 @@ const TripDetails: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showPlaceModal, setShowPlaceModal] = useState(false);
   const [error, setError] = useState("");
+
+  const handleDeletePlace = async (placeId: string) => {
+    try {
+      if (!trip?.id) return;
+
+      await deleteDoc(doc(db, "trips", trip.id, "places", placeId));
+
+      // refresh UI
+      setPlaces((prev) => prev.filter((p) => p.id !== placeId));
+    } catch (err) {
+      console.error("Failed to delete place:", err);
+    }
+  };
 
   const loadPlaces = async (tripId: string) => {
     try {
@@ -131,6 +146,34 @@ const TripDetails: React.FC = () => {
           destination={trip.destination.name}
           places={places}
         />
+        <FlightPricesCard
+          destination={trip.destination.name}
+          startDate={trip.startDate}
+        />
+      </div>
+      {/* Places */}
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold mb-3">Places</h2>
+
+        {places.length === 0 ? (
+          <p className="text-gray-500">No places added yet.</p>
+        ) : (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {places.map((place) => (
+              <PlaceCard
+                key={place.id}
+                place={place}
+                onClick={() => {
+                  // optional: later connect to map focus
+                  console.log("Clicked:", place);
+                }}
+                onDelete={() => {
+                  handleDeletePlace(place.id);
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ const BottomNav: React.FC = () => {
       : "text-gray-500";
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-white shadow-inner border-t py-3 flex justify-around">
+    <div className="fixed bottom-0 left-0 w-full bg-white shadow-inner border-t border-gray-400 py-3 flex justify-around z-50">
       <button
         onClick={() => navigate("/dashboard")}
         className={`flex flex-col items-center ${isActive("/dashboard")}`}

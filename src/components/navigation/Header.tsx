@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = ({ title, showBack = false }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full bg-white shadow-sm py-4 px-6 flex items-center justify-between sticky top-0 z-20">
+    <div className="w-full bg-white shadow-sm py-4 px-6 flex items-center justify-between sticky top-0 z-50">
       {/* Left side: Back button + Title */}
       <div className="flex items-center gap-4">
         {showBack && (

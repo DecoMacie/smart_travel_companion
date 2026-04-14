@@ -35,10 +35,10 @@ export const getUserTrips = async (userId: string): Promise<Trip[]> => {
   const q = query(collection(db, "trips"), where("userId", "==", userId));
   const snapshot = await getDocs(q);
 
-  return snapshot.docs.map((doc) => ({
+   return snapshot.docs.map((doc) => ({
     id: doc.id,
-    ...doc.data()
-  })) as Trip[];
+    ...(doc.data() as Omit<Trip, "id">),
+  }));
 };
 
 // Fetch a single trip by ID
@@ -68,6 +68,5 @@ export const updateTrip = async (tripId: string, data: Partial<Trip>) => {
 
 // Delete a trip
 export const deleteTrip = async (tripId: string) => {
-  const ref = doc(db, "trips", tripId);
-  await deleteDoc(ref);
+  await deleteDoc(doc(db, "trips", tripId));
 };

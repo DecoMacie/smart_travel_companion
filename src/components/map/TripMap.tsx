@@ -59,7 +59,7 @@ const TripMap: React.FC<TripMapProps> = ({ lat, lon, destination, places }) => {
         center={[lat, lon]}
         zoom={12}
         scrollWheelZoom={false}
-        className="w-full h-full"
+        className="w-full h-full z-0"
       >
         <TileLayer
           attribution="&copy; OpenStreetMap contributors"

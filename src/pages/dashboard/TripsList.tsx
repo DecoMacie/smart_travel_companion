@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserTrips, Trip } from "../../services/firebase/trips";
+import { getUserTrips, Trip, deleteTrip } from "../../services/firebase/trips";
 import { auth } from "../../services/firebase/firebase";
 import TripCard from "../../components/trips/TripCard";
 import { onAuthStateChanged } from "firebase/auth";
@@ -20,8 +20,6 @@ const TripsList: React.FC = () => {
       try {
         const data = await getUserTrips(user.uid);
         setTrips(data);
-        // console.log("User:", user);
-        console.log("Trips:", data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -31,7 +29,23 @@ const TripsList: React.FC = () => {
 
     return () => unsubscribe();
   }, []);
-  console.log("This");
+
+  const handleDelete = async (tripId: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this trip?",
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteTrip(tripId);
+
+      // 🔥 instant UI update
+      setTrips((prev) => prev.filter((t) => t.id !== tripId));
+    } catch (err) {
+      console.error("Failed to delete trip:", err);
+    }
+  };
 
   if (loading) {
     return <p className="p-6 text-gray-500">Loading your trips…</p>;
@@ -62,9 +76,14 @@ const TripsList: React.FC = () => {
       )}
 
       {/* Trips Grid */}
-      <div className="grid gap-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {trips.map((trip) => (
-          <TripCard key={trip.id} trip={trip} />
+          <TripCard
+            key={trip.id}
+            trip={trip}
+            onClick={() => navigate(`/trips/${trip.id}`)}
+            onDelete={() => handleDelete(trip.id)}
+          />
         ))}
       </div>
     </div>
