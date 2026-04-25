@@ -2,21 +2,38 @@ import React, { useState } from "react";
 import { buildGoogleFlightsLink } from "../../utils/flightLinks";
 
 interface FlightPricesCardProps {
-  destination: string;
+  destinationName: string;
+  destinationCode?: string;
   startDate: string;
+  endDate?: string; // 👈 NEW
 }
 
 const FlightPricesCard: React.FC<FlightPricesCardProps> = ({
-  destination,
+  destinationName,
   startDate,
+  endDate,
 }) => {
-  const [origin, setOrigin] = useState("London"); // default
+  const [origin, setOrigin] = useState(""); // default
+  const [includeReturn, setIncludeReturn] = useState(true);
 
-  const googleLink = buildGoogleFlightsLink(origin, destination, startDate);
+  const googleLink = buildGoogleFlightsLink(
+    origin,
+    destinationName,
+    startDate,
+    includeReturn ? endDate : undefined,
+  );
 
   return (
     <div className="bg-white rounded-xl shadow p-4 mt-6">
       <h3 className="text-lg font-semibold mb-2">Flight Prices</h3>
+      <div className="flex items-center gap-2 mb-3">
+        <input
+          type="checkbox"
+          checked={includeReturn}
+          onChange={(e) => setIncludeReturn(e.target.checked)}
+        />
+        <label className="text-sm">Return flight</label>
+      </div>
       <div className="mb-3">
         <label className="text-sm text-gray-600">From</label>
         <input

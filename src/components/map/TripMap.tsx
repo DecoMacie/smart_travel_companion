@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { Place } from "../../utils/types";
@@ -39,14 +39,19 @@ const FitBounds: React.FC<{ lat: number; lon: number; places: Place[] }> = ({
   places,
 }) => {
   const map = useMap();
+  const hasFitRef = useRef(false);
 
   useEffect(() => {
+    if (!places.length) return;
+    if (hasFitRef.current) return;
+
     const bounds = L.latLngBounds([
-      [lat, lon] as [number, number],
-      ...places.map((p) => [p.lat, p.lon] as [number, number]),
+      L.latLng(lat, lon),
+      ...places.map((p) => L.latLng(p.lat, p.lon)),
     ]);
 
     map.fitBounds(bounds, { padding: [50, 50] });
+    hasFitRef.current = true;
   }, [lat, lon, places, map]);
 
   return null;

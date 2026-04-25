@@ -44,6 +44,7 @@ const AddPlaceModal: React.FC<AddPlaceModalProps> = ({
         type,
         lat: coords.lat,
         lon: coords.lon,
+        address: coords.address,
       });
 
       onAdded();

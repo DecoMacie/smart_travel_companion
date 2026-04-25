@@ -8,6 +8,11 @@ import { db } from "../../services/firebase/firebase";
 import { Place } from "../../utils/types";
 import PlaceCard from "../../components/places/PlaceCard";
 import FlightPricesCard from "../../components/flights/FlightPricesCard";
+import Itinerary from "../../components/itinerary/Itinerary";
+import { fetchNearbyPlaces } from "../../utils/places";
+
+const FILTERS = ["restaurant", "hotel", "attraction"] as const;
+type FilterType = (typeof FILTERS)[number];
 
 const TripDetails: React.FC = () => {
   const { id } = useParams();
@@ -18,6 +23,19 @@ const TripDetails: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showPlaceModal, setShowPlaceModal] = useState(false);
   const [error, setError] = useState("");
+  const [activeFilters, setActiveFilters] = useState<FilterType[]>([]);
+  const [externalPlaces, setExternalPlaces] = useState<Place[]>([]);
+  const [cache, setCache] = useState<Partial<Record<FilterType, Place[]>>>({});
+
+  const mergedPlaces = React.useMemo(() => {
+    const map = new Map<string, Place>();
+
+    [...places, ...externalPlaces].forEach((p) => {
+      map.set(p.id ?? `${p.lat}-${p.lon}-${p.name}`, p);
+    });
+
+    return Array.from(map.values());
+  }, [places, externalPlaces]);
 
   const handleDeletePlace = async (placeId: string) => {
     try {
@@ -47,6 +65,47 @@ const TripDetails: React.FC = () => {
       setError("Failed to load places.");
     }
   };
+
+  const toggleFilter = (type: FilterType) => {
+    setActiveFilters((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
+    );
+  };
+
+  useEffect(() => {
+    const load = async () => {
+      if (!trip?.destination) return;
+
+      if (activeFilters.length === 0) {
+        setExternalPlaces([]);
+        return;
+      }
+
+      const results: Place[] = [];
+      const newCache = { ...cache };
+
+      for (const type of activeFilters) {
+        if (newCache[type]) {
+          results.push(...(newCache[type] as Place[]));
+          continue;
+        }
+
+        const data = await fetchNearbyPlaces(
+          trip.destination.lat,
+          trip.destination.lon,
+          type,
+        );
+
+        newCache[type] = data;
+        results.push(...data);
+      }
+
+      setCache(newCache);
+      setExternalPlaces(results);
+    };
+
+    load();
+  }, [activeFilters, trip, cache]);
 
   useEffect(() => {
     let isMounted = true;
@@ -132,6 +191,7 @@ const TripDetails: React.FC = () => {
           + Add Place
         </button>
 
+        {/* Add place */}
         {showPlaceModal && (
           <AddPlaceModal
             tripId={trip.id}
@@ -140,17 +200,45 @@ const TripDetails: React.FC = () => {
           />
         )}
 
+        {/* filter UI */}
+        <div className="flex gap-2 mb-3">
+          {FILTERS.map((type) => (
+            <button
+              key={type}
+              onClick={() => toggleFilter(type)}
+              className={`px-3 py-1 rounded-full border ${
+                activeFilters.includes(type)
+                  ? "bg-blue-600 text-white"
+                  : "bg-white"
+              }`}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+
         <TripMap
           lat={trip.destination.lat}
           lon={trip.destination.lon}
           destination={trip.destination.name}
-          places={places}
+          places={mergedPlaces}
         />
         <FlightPricesCard
-          destination={trip.destination.name}
+          destinationName={trip.destination.name}
           startDate={trip.startDate}
+          endDate={trip.endDate}
         />
       </div>
+
+      {/* Itinerary */}
+      <div className="mt-8">
+        <Itinerary
+          tripId={trip.id}
+          startDate={trip.startDate}
+          endDate={trip.endDate}
+        />
+      </div>
+
       {/* Places */}
       <div className="mt-6">
         <h2 className="text-xl font-semibold mb-3">Places</h2>

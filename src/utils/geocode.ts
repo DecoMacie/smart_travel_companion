@@ -10,6 +10,7 @@ export const geocodeLocation = async (location: string) => {
 
   return {
     lat: parseFloat(data[0].lat),
-    lon: parseFloat(data[0].lon)
+    lon: parseFloat(data[0].lon),
+    address: data[0].display_name,
   };
 };

@@ -1,20 +1,35 @@
 export const buildGoogleFlightsLink = (
   origin: string,
   destination: string,
-  startDate: string
+  departDate: string,
+  returnDate?: string
 ) => {
+  const query = returnDate
+    ? `${origin} to ${destination} ${departDate} return ${returnDate}`
+    : `${origin} to ${destination} ${departDate}`;
+
   return `https://www.google.com/travel/flights?q=${encodeURIComponent(
-    `${origin} to ${destination} ${startDate}`
+    query
   )}`;
+};
+
+const formatDate = (date: string) => {
+  const [year, month, day] = date.split("-");
+  return `${year.slice(2)}${month}${day}`;
 };
 
 export const buildSkyscannerLink = (
   originCode: string,
   destinationCode: string,
-  startDate: string
+  departDate: string,
+  returnDate?: string
 ) => {
-  const [year, month, day] = startDate.split("-");
-  const formatted = `${year.slice(2)}${month}${day}`;
+  const depart = formatDate(departDate);
 
-  return `https://www.skyscanner.net/transport/flights/${originCode}/${destinationCode}/${formatted}/`;
+  if (returnDate) {
+    const ret = formatDate(returnDate);
+    return `https://www.skyscanner.net/transport/flights/${originCode}/${destinationCode}/${depart}/${ret}/`;
+  }
+
+  return `https://www.skyscanner.net/transport/flights/${originCode}/${destinationCode}/${depart}/`;
 };

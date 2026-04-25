@@ -33,8 +33,8 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place, onClick, onDelete }) => {
         </button>
       </div>
 
-      <div className="mt-2 text-sm text-gray-600">
-        Lat: {place.lat.toFixed(4)}, Lon: {place.lon.toFixed(4)}
+      <div className="mt-2 text-sm text-gray-600 line-clamp-2">
+        {place.address || "No address available"}
       </div>
     </div>
   );
