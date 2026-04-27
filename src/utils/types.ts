@@ -13,5 +13,5 @@ export interface Place {
 export interface ItineraryDayType {
   id: string;
   dayNumber: number;
-  date: string | null;
+  date?: string | null;
 }

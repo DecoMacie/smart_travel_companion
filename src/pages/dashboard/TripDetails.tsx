@@ -3,13 +3,21 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getTripById, Trip } from "../../services/firebase/trips";
 import TripMap from "../../components/map/TripMap";
 import AddPlaceModal from "../../components/places/AddPlaceModal";
-import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  addDoc,
+} from "firebase/firestore";
 import { db } from "../../services/firebase/firebase";
-import { Place } from "../../utils/types";
+import { Place, ItineraryDayType } from "../../utils/types";
 import PlaceCard from "../../components/places/PlaceCard";
 import FlightPricesCard from "../../components/flights/FlightPricesCard";
 import Itinerary from "../../components/itinerary/Itinerary";
 import { fetchNearbyPlaces } from "../../utils/places";
+import AddToDayModal from "../../components/itinerary/AddToDayModal";
+import { buildBookingLink } from "../../utils/hotelLinks";
 
 const FILTERS = ["restaurant", "hotel", "attraction"] as const;
 type FilterType = (typeof FILTERS)[number];
@@ -27,14 +35,17 @@ const TripDetails: React.FC = () => {
   const [externalPlaces, setExternalPlaces] = useState<Place[]>([]);
   const [cache, setCache] = useState<Partial<Record<FilterType, Place[]>>>({});
 
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [showDayModal, setShowDayModal] = useState(false);
+  const [days, setDays] = useState<ItineraryDayType[]>([]);
+
   const mergedPlaces = React.useMemo(() => {
-    const map = new Map<string, Place>();
+    const savedCoords = new Set(places.map((p) => `${p.lat}-${p.lon}`));
 
-    [...places, ...externalPlaces].forEach((p) => {
-      map.set(p.id ?? `${p.lat}-${p.lon}-${p.name}`, p);
-    });
-
-    return Array.from(map.values());
+    return [
+      ...places,
+      ...externalPlaces.filter((p) => !savedCoords.has(`${p.lat}-${p.lon}`)),
+    ];
   }, [places, externalPlaces]);
 
   const handleDeletePlace = async (placeId: string) => {
@@ -72,6 +83,81 @@ const TripDetails: React.FC = () => {
     );
   };
 
+  const handleSaveExternalPlace = async (place: Place) => {
+    if (!trip?.id) return;
+
+    try {
+      await addDoc(collection(db, "trips", trip.id, "places"), {
+        name: place.name,
+        lat: place.lat,
+        lon: place.lon,
+        type: place.type,
+        source: "user",
+      });
+
+      // refresh
+      loadPlaces(trip.id);
+    } catch (err) {
+      console.error("Failed to save place:", err);
+    }
+  };
+
+  const loadDays = async (tripId: string) => {
+    try {
+      const ref = collection(db, "trips", tripId, "itinerary");
+      const snapshot = await getDocs(ref);
+
+      const list: ItineraryDayType[] = snapshot.docs.map((doc) => {
+        const data = doc.data() as Omit<ItineraryDayType, "id">;
+
+        return {
+          id: doc.id,
+          dayNumber: data.dayNumber,
+          date: data.date ?? null,
+        };
+      });
+
+      setDays(list);
+    } catch (err) {
+      console.error("Failed to load days:", err);
+    }
+  };
+
+  const handleSelectDay = async (day: ItineraryDayType) => {
+    if (!trip?.id || !selectedPlace) return;
+
+    try {
+      const ref = collection(
+        db,
+        "trips",
+        trip.id,
+        "itinerary",
+        day.id,
+        "items",
+      );
+
+      await addDoc(ref, {
+        name: selectedPlace.name,
+        type: "place",
+        placeId: selectedPlace.id,
+        lat: selectedPlace.lat,
+        lon: selectedPlace.lon,
+        order: Date.now(), // better than length
+      });
+
+      setShowDayModal(false);
+      setSelectedPlace(null);
+    } catch (err) {
+      console.error("Failed to add to itinerary:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (trip?.id) {
+      loadDays(trip.id);
+    }
+  }, [trip]);
+
   useEffect(() => {
     const load = async () => {
       if (!trip?.destination) return;
@@ -105,7 +191,7 @@ const TripDetails: React.FC = () => {
     };
 
     load();
-  }, [activeFilters, trip, cache]);
+  }, [activeFilters, trip]);
 
   useEffect(() => {
     let isMounted = true;
@@ -156,6 +242,14 @@ const TripDetails: React.FC = () => {
       </div>
     );
   }
+
+  const getHotelLink = (place: Place) =>
+    buildBookingLink(
+      place.name,
+      trip.destination.name,
+      trip.startDate,
+      trip.endDate,
+    );
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -222,6 +316,9 @@ const TripDetails: React.FC = () => {
           lon={trip.destination.lon}
           destination={trip.destination.name}
           places={mergedPlaces}
+          startDate={trip.startDate}
+          endDate={trip.endDate}
+          onSavePlace={handleSaveExternalPlace}
         />
         <FlightPricesCard
           destinationName={trip.destination.name}
@@ -239,6 +336,15 @@ const TripDetails: React.FC = () => {
         />
       </div>
 
+      {/* Add Place to Day modal */}
+      {showDayModal && (
+        <AddToDayModal
+          days={days}
+          onSelect={handleSelectDay}
+          onClose={() => setShowDayModal(false)}
+        />
+      )}
+
       {/* Places */}
       <div className="mt-6">
         <h2 className="text-xl font-semibold mb-3">Places</h2>
@@ -251,6 +357,11 @@ const TripDetails: React.FC = () => {
               <PlaceCard
                 key={place.id}
                 place={place}
+                getHotelLink={getHotelLink}
+                onAddToDay={(p) => {
+                  setSelectedPlace(p);
+                  setShowDayModal(true);
+                }}
                 onClick={() => {
                   // optional: later connect to map focus
                   console.log("Clicked:", place);

@@ -6,14 +6,22 @@ import {
   orderBy,
   query,
   onSnapshot,
+  deleteDoc,
+  doc,
+  updateDoc,
 } from "firebase/firestore";
 import { ItineraryDayType } from "../../utils/types";
 
 interface ItineraryItem {
   id: string;
   name: string;
-  type: string;
+  type: "note" | "place";
   order: number;
+
+  // 👇 optional for places
+  placeId?: string;
+  lat?: number;
+  lon?: number;
 }
 
 interface ItineraryDayProps {
@@ -24,6 +32,42 @@ interface ItineraryDayProps {
 const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
   const [items, setItems] = useState<ItineraryItem[]>([]);
   const [newItem, setNewItem] = useState("");
+
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
+  const [editValue, setEditValue] = useState("");
+
+  const handleDelete = async (itemId: string) => {
+    try {
+      await deleteDoc(
+        doc(db, "trips", tripId, "itinerary", day.id, "items", itemId),
+      );
+    } catch (err) {
+      console.error("Failed to delete item:", err);
+    }
+  };
+
+  const handleEdit = (item: ItineraryItem) => {
+    setEditingItemId(item.id);
+    setEditValue(item.name);
+  };
+
+  const handleSaveEdit = async (itemId: string) => {
+    try {
+      await updateDoc(
+        doc(db, "trips", tripId, "itinerary", day.id, "items", itemId),
+        {
+          name: editValue.trim(),
+        },
+      );
+
+      setEditingItemId(null);
+      setEditValue("");
+    } catch (err) {
+      console.error("Failed to update item:", err);
+    }
+  };
+  const nextOrder =
+    items.length > 0 ? Math.max(...items.map((i) => i.order)) + 1 : 1;
 
   useEffect(() => {
     const ref = collection(db, "trips", tripId, "itinerary", day.id, "items");
@@ -44,9 +88,6 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
 
   const addItem = async () => {
     if (!newItem.trim()) return;
-
-    const nextOrder =
-      items.length > 0 ? Math.max(...items.map((i) => i.order)) + 1 : 1;
 
     await addDoc(
       collection(db, "trips", tripId, "itinerary", day.id, "items"),
@@ -71,8 +112,46 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
 
       <div className="space-y-2 mb-3">
         {items.map((item) => (
-          <div key={item.id} className="border p-2 rounded-lg bg-gray-50">
-            {item.name}
+          <div
+            key={item.id}
+            className="border p-2 rounded-lg bg-gray-50 flex justify-between items-center"
+          >
+            {editingItemId === item.id ? (
+              <input
+                value={editValue}
+                onChange={(e) => setEditValue(e.target.value)}
+                onBlur={() => handleSaveEdit(item.id)}
+                onKeyDown={(e) => e.key === "Enter" && handleSaveEdit(item.id)}
+                className="border px-2 py-1 rounded w-full mr-2"
+                autoFocus
+              />
+            ) : (
+              <div className="flex-1">
+                <div className="font-medium">{item.name}</div>
+                <div className="text-xs text-gray-500 capitalize">
+                  {item.type}
+                </div>
+              </div>
+            )}
+
+            <div className="flex gap-2 ml-2">
+              {/* Edit */}
+              {item.type === "note" && (
+                <button
+                  onClick={() => handleEdit(item)}
+                  className="text-sm hover:bg-gray-200 rounded px-2"
+                >
+                  ✏️
+                </button>
+              )}
+              {/* Delete */}
+              <button
+                onClick={() => handleDelete(item.id)}
+                className="text-sm hover:bg-red-100 text-red-600 rounded px-2"
+              >
+                🗑️
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -88,9 +167,9 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
         />
         <button
           onClick={addItem}
-          className="px-4 bg-blue-600 text-white rounded-lg"
+          className="px-4 hover:bg-blue-200 text-white rounded-lg"
         >
-          Add
+          ➕
         </button>
       </div>
     </div>

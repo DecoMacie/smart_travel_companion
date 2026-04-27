@@ -2,12 +2,16 @@ import React, { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { Place } from "../../utils/types";
+import { buildBookingLink } from "../../utils/hotelLinks";
 
 interface TripMapProps {
   lat: number;
   lon: number;
   destination: string;
   places: Place[];
+  startDate: string;
+  endDate: string;
+  onSavePlace?: (place: Place) => void;
 }
 
 const icons: Record<string, L.Icon> = {
@@ -57,13 +61,21 @@ const FitBounds: React.FC<{ lat: number; lon: number; places: Place[] }> = ({
   return null;
 };
 
-const TripMap: React.FC<TripMapProps> = ({ lat, lon, destination, places }) => {
+const TripMap: React.FC<TripMapProps> = ({
+  lat,
+  lon,
+  destination,
+  places,
+  startDate,
+  endDate,
+  onSavePlace,
+}) => {
   return (
     <div className="w-full h-72 rounded-xl overflow-hidden shadow z-0">
       <MapContainer
         center={[lat, lon]}
         zoom={12}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
         className="w-full h-full z-0"
       >
         <TileLayer
@@ -83,12 +95,45 @@ const TripMap: React.FC<TripMapProps> = ({ lat, lon, destination, places }) => {
           <Marker
             key={p.id}
             position={[p.lat, p.lon]}
-            icon={icons[p.type] ?? icons.default}
+            icon={icons[p.type as keyof typeof icons] ?? icons.default}
           >
             <Popup>
               <strong>{p.name}</strong>
               <br />
               {p.type}
+
+              {/* Save button */}
+
+              <div className="mt-2">
+                {p.source === "external" ? (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onSavePlace?.(p);
+                    }}
+                    className="mt-2 px-2 py-1 bg-blue-600 text-white text-xs rounded"
+                  >
+                    Save to trip
+                  </button>
+                ) : (
+                  <span className="text-green-600 text-sm">Saved</span>
+                )}
+              </div>
+              {p.type === "hotel" && (
+                <a
+                  href={buildBookingLink(
+                    p.name,
+                    destination,
+                    startDate,
+                    endDate,
+                  )}
+                  target="_blank"
+                  className="text-blue-600 text-sm underline mt-2 block"
+                >
+                  View prices
+                </a>
+              )}
             </Popup>
           </Marker>
         ))}
