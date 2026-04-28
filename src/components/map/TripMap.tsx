@@ -11,7 +11,9 @@ interface TripMapProps {
   places: Place[];
   startDate: string;
   endDate: string;
+  selectedPlace?: Place | null;
   onSavePlace?: (place: Place) => void;
+  loading: boolean;
 }
 
 const icons: Record<string, L.Icon> = {
@@ -61,6 +63,12 @@ const FitBounds: React.FC<{ lat: number; lon: number; places: Place[] }> = ({
   return null;
 };
 
+const selectedIcon = new L.Icon({
+  iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png", // or any standout icon
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
 const TripMap: React.FC<TripMapProps> = ({
   lat,
   lon,
@@ -68,10 +76,17 @@ const TripMap: React.FC<TripMapProps> = ({
   places,
   startDate,
   endDate,
+  selectedPlace,
   onSavePlace,
+  loading,
 }) => {
   return (
-    <div className="w-full h-72 rounded-xl overflow-hidden shadow z-0">
+    <div className="relative w-full h-72 rounded-xl overflow-hidden shadow">
+      {loading && (
+        <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-10">
+          <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-600 border-t-transparent"></div>
+        </div>
+      )}
       <MapContainer
         center={[lat, lon]}
         zoom={12}
@@ -91,52 +106,62 @@ const TripMap: React.FC<TripMapProps> = ({
         </Marker>
 
         {/* Places */}
-        {places.map((p) => (
-          <Marker
-            key={p.id}
-            position={[p.lat, p.lon]}
-            icon={icons[p.type as keyof typeof icons] ?? icons.default}
-          >
-            <Popup>
-              <strong>{p.name}</strong>
-              <br />
-              {p.type}
+        {places.map((p) => {
+          const isSelected =
+            selectedPlace &&
+            selectedPlace.lat === p.lat &&
+            selectedPlace.lon === p.lon;
+          return (
+            <Marker
+              key={p.id}
+              position={[p.lat, p.lon]}
+              icon={
+                isSelected
+                  ? selectedIcon
+                  : (icons[p.type as keyof typeof icons] ?? icons.default)
+              }
+            >
+              <Popup>
+                <strong>{p.name}</strong>
+                <br />
+                {p.type}
 
-              {/* Save button */}
+                {/* Save button */}
 
-              <div className="mt-2">
-                {p.source === "external" ? (
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      onSavePlace?.(p);
-                    }}
-                    className="mt-2 px-2 py-1 bg-blue-600 text-white text-xs rounded"
-                  >
-                    Save to trip
-                  </button>
-                ) : (
-                  <span className="text-green-600 text-sm">Saved</span>
-                )}
-              </div>
-              {p.type === "hotel" && (
-                <a
-                  href={buildBookingLink(
-                    p.name,
-                    destination,
-                    startDate,
-                    endDate,
+                <div className="mt-2">
+                  {p.source === "external" ? (
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onSavePlace?.(p);
+                      }}
+                      className="mt-2 px-2 py-1 bg-blue-600 text-white text-xs rounded"
+                    >
+                      Save to trip
+                    </button>
+                  ) : (
+                    <span className="text-green-600 text-sm">Saved</span>
                   )}
-                  target="_blank"
-                  className="text-blue-600 text-sm underline mt-2 block"
-                >
-                  View prices
-                </a>
-              )}
-            </Popup>
-          </Marker>
-        ))}
+                </div>
+                {p.type === "hotel" && (
+                  <a
+                    href={buildBookingLink(
+                      p.name,
+                      destination,
+                      startDate,
+                      endDate,
+                    )}
+                    target="_blank"
+                    className="text-blue-600 text-sm underline mt-2 block"
+                  >
+                    View prices
+                  </a>
+                )}
+              </Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
     </div>
   );

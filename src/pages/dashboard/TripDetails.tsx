@@ -29,6 +29,7 @@ const TripDetails: React.FC = () => {
   const [trip, setTrip] = useState<Trip | null>(null);
   const [places, setPlaces] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingPlaces, setLoadingPlaces] = useState(false);
   const [showPlaceModal, setShowPlaceModal] = useState(false);
   const [error, setError] = useState("");
   const [activeFilters, setActiveFilters] = useState<FilterType[]>([]);
@@ -167,6 +168,8 @@ const TripDetails: React.FC = () => {
         return;
       }
 
+      setLoadingPlaces(true);
+
       const results: Place[] = [];
       const newCache = { ...cache };
 
@@ -188,6 +191,7 @@ const TripDetails: React.FC = () => {
 
       setCache(newCache);
       setExternalPlaces(results);
+      setLoadingPlaces(false);
     };
 
     load();
@@ -274,6 +278,12 @@ const TripDetails: React.FC = () => {
         </div>
       )}
 
+      <FlightPricesCard
+        destinationName={trip.destination.name}
+        startDate={trip.startDate}
+        endDate={trip.endDate}
+      />
+
       {/* Map */}
       <div className="mt-6 p-4 bg-white rounded-xl shadow">
         <h2 className="text-xl font-semibold mb-2">Location</h2>
@@ -311,20 +321,50 @@ const TripDetails: React.FC = () => {
           ))}
         </div>
 
-        <TripMap
-          lat={trip.destination.lat}
-          lon={trip.destination.lon}
-          destination={trip.destination.name}
-          places={mergedPlaces}
-          startDate={trip.startDate}
-          endDate={trip.endDate}
-          onSavePlace={handleSaveExternalPlace}
-        />
-        <FlightPricesCard
-          destinationName={trip.destination.name}
-          startDate={trip.startDate}
-          endDate={trip.endDate}
-        />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* LEFT: Map */}
+          <div className="lg:col-span-2">
+            <div className="sticky top-4">
+              <TripMap
+                lat={trip.destination.lat}
+                lon={trip.destination.lon}
+                destination={trip.destination.name}
+                places={mergedPlaces}
+                startDate={trip.startDate}
+                endDate={trip.endDate}
+                onSavePlace={handleSaveExternalPlace}
+                selectedPlace={selectedPlace}
+                loading={loadingPlaces}
+              />
+            </div>
+          </div>
+          {/* RIGHT: Places */}
+          <div className="mt-6 space-y-3">
+            <h2 className="text-xl font-semibold mb-3">Places</h2>
+
+            {places.length === 0 ? (
+              <p className="text-gray-500">No places added yet.</p>
+            ) : (
+              <div className="grid gap-3 sm:grid-cols-2">
+                {places.map((place) => (
+                  <PlaceCard
+                    key={place.id}
+                    place={place}
+                    getHotelLink={getHotelLink}
+                    onAddToDay={(p) => {
+                      setSelectedPlace(p);
+                      setShowDayModal(true);
+                    }}
+                    onClick={() => setSelectedPlace(place)}
+                    onDelete={() => {
+                      handleDeletePlace(place.id);
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Itinerary */}
@@ -344,36 +384,6 @@ const TripDetails: React.FC = () => {
           onClose={() => setShowDayModal(false)}
         />
       )}
-
-      {/* Places */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-3">Places</h2>
-
-        {places.length === 0 ? (
-          <p className="text-gray-500">No places added yet.</p>
-        ) : (
-          <div className="grid gap-3 sm:grid-cols-2">
-            {places.map((place) => (
-              <PlaceCard
-                key={place.id}
-                place={place}
-                getHotelLink={getHotelLink}
-                onAddToDay={(p) => {
-                  setSelectedPlace(p);
-                  setShowDayModal(true);
-                }}
-                onClick={() => {
-                  // optional: later connect to map focus
-                  console.log("Clicked:", place);
-                }}
-                onDelete={() => {
-                  handleDeletePlace(place.id);
-                }}
-              />
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 };
