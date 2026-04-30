@@ -10,8 +10,7 @@ const Privacy: React.FC = () => {
   const [accepted, setAccepted] = useState(false);
   const [error, setError] = useState("");
 
-  const handleFinish = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleFinish = async () => {
     setError("");
 
     if (!user) {
@@ -29,65 +28,77 @@ const Privacy: React.FC = () => {
         privacyAccepted: true,
         onboardingCompleted: true,
       });
+
       navigate("/dashboard");
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Failed to update privacy.");
-      }
+      setError(
+        err instanceof Error ? err.message : "Failed to update privacy.",
+      );
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow">
-        <h2 className="text-2xl font-semibold mb-6 text-center">
-          Privacy Notice
-        </h2>
-
-        <p className="text-gray-700 text-sm mb-4">
-          We value your privacy. Here’s how we use your data:
-        </p>
-
-        <ul className="text-gray-600 text-sm space-y-2 mb-6">
-          <li>
-            • Your profile and preferences help personalize your travel
-            experience.
-          </li>
-          <li>
-            • Your data is stored securely and never sold to third parties.
-          </li>
-          <li>• You can update or delete your data at any time.</li>
-          <li>
-            • We only collect information needed to improve your experience.
-          </li>
-        </ul>
-
-        <div className="flex items-center mb-6">
-          <input
-            type="checkbox"
-            checked={accepted}
-            onChange={() => setAccepted(!accepted)}
-            className="mr-2 h-4 w-4"
-          />
-          <label className="text-sm text-gray-700">
-            I understand and agree to continue.
-          </label>
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <div className="text-3xl mb-2">🔐</div>
+          <h2 className="text-2xl font-semibold">Privacy & Data</h2>
+          <p className="text-sm text-gray-500 mt-1">
+            We keep your information safe and in your control
+          </p>
         </div>
 
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+        {/* Content card */}
+        <div className="bg-gray-50 rounded-xl p-4 mb-6 space-y-3 text-sm text-gray-700">
+          <p>• Your profile helps personalize your travel experience</p>
+          <p>• Data is securely stored and never sold to third parties</p>
+          <p>• You can update or delete your data anytime</p>
+          <p>• We only collect what is needed to improve your experience</p>
+        </div>
 
+        {/* Agreement card */}
+        <button
+          type="button"
+          onClick={() => setAccepted((v) => !v)}
+          className={`
+            w-full flex items-center gap-3 p-4 rounded-xl border
+            transition text-left mb-4
+            ${
+              accepted
+                ? "bg-blue-600 text-white border-blue-600 shadow"
+                : "bg-white text-gray-700 hover:bg-gray-50"
+            }
+          `}
+        >
+          <div className="text-xl">✓</div>
+
+          <div className="flex-1">
+            <p className="font-medium">I understand and agree</p>
+            <p
+              className={`text-xs ${accepted ? "text-white/80" : "text-gray-500"}`}
+            >
+              Required to continue
+            </p>
+          </div>
+        </button>
+
+        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+
+        {/* CTA */}
         <button
           onClick={handleFinish}
-          className={`w-full py-2 rounded-lg transition ${
-            accepted
-              ? "bg-blue-600 text-white hover:bg-blue-700"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
-          }`}
           disabled={!accepted}
+          className={`
+            w-full py-3 rounded-xl font-medium transition
+            ${
+              accepted
+                ? "bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+            }
+          `}
         >
-          Finish
+          Finish Setup
         </button>
       </div>
     </div>

@@ -23,53 +23,75 @@ const Language: React.FC = () => {
       await updateUser(user.uid, { preferredLanguage: language });
       navigate("/onboarding/privacy");
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Failed to update language.");
-      }
+      setError(
+        err instanceof Error ? err.message : "Failed to update language.",
+      );
     }
   };
 
   const languages = [
-    { code: "en", label: "English" },
-    { code: "pt", label: "Portuguese" },
-    { code: "es", label: "Spanish" },
-    { code: "fr", label: "French" },
-    { code: "de", label: "German" },
+    { code: "en", label: "English", icon: "🇬🇧" },
+    { code: "pt", label: "Portuguese", icon: "🇵🇹" },
+    { code: "es", label: "Spanish", icon: "🇪🇸" },
+    { code: "fr", label: "French", icon: "🇫🇷" },
+    { code: "de", label: "German", icon: "🇩🇪" },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow">
-        <h2 className="text-2xl font-semibold mb-6 text-center">
-          Choose Your Language
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm">
+        <h2 className="text-2xl font-semibold text-center mb-1">
+          Choose Language
         </h2>
-
-        <p className="text-gray-600 text-sm mb-6 text-center">
-          Select the language you prefer to use in the app.
+        <p className="text-sm text-gray-500 text-center mb-6">
+          Select your preferred language
         </p>
 
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-        <form onSubmit={handleContinue} className="space-y-4">
-          {languages.map((lang) => (
-            <div
-              key={lang.code}
-              onClick={() => setLanguage(lang.code)}
-              className={`p-4 border rounded-lg cursor-pointer transition ${
-                language === lang.code
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-gray-700"
-              }`}
-            >
-              {lang.label}
-            </div>
-          ))}
+        <form onSubmit={handleContinue} className="space-y-3">
+          {languages.map((lang) => {
+            const selected = language === lang.code;
+
+            return (
+              <button
+                type="button"
+                key={lang.code}
+                onClick={() => setLanguage(lang.code)}
+                className={`
+                  w-full flex items-center gap-4 p-4 rounded-xl border
+                  transition text-left
+                  ${
+                    selected
+                      ? "bg-blue-600 text-white border-blue-600 shadow"
+                      : "bg-white text-gray-700 hover:bg-gray-50"
+                  }
+                `}
+              >
+                <div className="text-2xl">{lang.icon}</div>
+
+                <div className="flex-1">
+                  <p className="font-medium">{lang.label}</p>
+                  <p
+                    className={`text-xs ${
+                      selected ? "text-white/80" : "text-gray-500"
+                    }`}
+                  >
+                    {lang.code.toUpperCase()}
+                  </p>
+                </div>
+
+                {selected && <span className="text-white">✓</span>}
+              </button>
+            );
+          })}
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition mt-4"
+            className="
+              w-full mt-4 bg-blue-600 text-white py-3 rounded-xl
+              hover:bg-blue-700 transition shadow-sm
+            "
           >
             Continue
           </button>

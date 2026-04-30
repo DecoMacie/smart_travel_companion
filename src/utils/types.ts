@@ -15,3 +15,28 @@ export interface ItineraryDayType {
   dayNumber: number;
   date?: string | null;
 }
+
+export interface UserProfile {
+  name: string;
+  country?: string;
+  preferredLanguage?: string;
+
+  travelPreferences?: {
+    style?: {
+      id: string;
+      hotelVal: string;
+      ticketVal: string;
+    };
+    tripLength?: string;
+    interests?: string[];
+  };
+
+  options?: {
+    simplifiedNavigation?: boolean;
+    largeText?: boolean;
+    highContrast?: boolean;
+  };
+
+  privacyAccepted?: boolean;
+  onboardingCompleted?: boolean;
+}

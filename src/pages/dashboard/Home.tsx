@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { onSnapshot } from "firebase/firestore";
 import { auth } from "../../services/firebase/firebase";
 import { getUserTrips, Trip } from "../../services/firebase/trips";
 import TripCard from "../../components/trips/TripCard";
 import { onAuthStateChanged } from "firebase/auth";
+import { UserProfile } from "../../utils/types";
+import { userDoc } from "../../services/firebase/user";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const user = auth.currentUser;
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
   const [upcomingTrips, setUpcomingTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,25 +21,34 @@ const Home: React.FC = () => {
         setLoading(false);
         return;
       }
+
+      // 🔹 User profile listener
+      const ref = userDoc(user.uid);
+      const unsubProfile = onSnapshot(ref, (snap) => {
+        if (snap.exists()) {
+          setUserProfile(snap.data());
+        }
+      });
+
+      // 🔹 Trips fetch
       try {
         const trips = await getUserTrips(user.uid);
-        // Sort by start date
-
         const sorted = trips.sort(
           (a, b) =>
             new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
         );
-        // Only show next 2–3 trips
         setUpcomingTrips(sorted.slice(0, 3));
       } catch (err) {
         console.error(err);
       } finally {
         setLoading(false);
       }
+
+      return () => unsubProfile();
     });
 
     return () => unsubscribe();
-  }, [user]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -44,7 +56,7 @@ const Home: React.FC = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-semibold">
-            Welcome back{user?.displayName ? `, ${user.displayName}` : ""}
+            {userProfile ? `Welcome back, ${userProfile.name}` : "Welcome back"}
           </h1>
           <p className="text-gray-500 mt-1">Ready for your next adventure?</p>
         </div>

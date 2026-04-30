@@ -1,5 +1,6 @@
+import { UserProfile } from "../../utils/types";
 import { db } from "./firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, DocumentReference } from "firebase/firestore";
 
 export type TravelStyle = {
   id: string;
@@ -18,6 +19,21 @@ export type AccessibilityOptions = {
   largeText?: boolean;
   highContrast?: boolean;
 };
+
+export const getUser = async (uid: string): Promise<UserProfile | null> => {
+  try {
+    const ref = doc(db, "users", uid);
+    const snap = await getDoc(ref);
+
+    return snap.exists() ? snap.data() as UserProfile : null;
+  } catch (err) {
+    console.error("Failed to fetch user:", err);
+    return null;
+  }
+};
+
+export const userDoc = (uid: string) =>
+  doc(db, "users", uid) as DocumentReference<UserProfile>;
 
 export const updateUser = async (
   userId: string,

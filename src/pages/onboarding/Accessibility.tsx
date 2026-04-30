@@ -24,6 +24,7 @@ const Accessibility: React.FC = () => {
 
     try {
       setLoading(true);
+
       await updateUser(user.uid, {
         options: {
           simplifiedNavigation,
@@ -34,75 +35,106 @@ const Accessibility: React.FC = () => {
 
       navigate("/onboarding/language");
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Failed to save preferences. Please try again.");
-      }
+      setError(
+        err instanceof Error ? err.message : "Failed to save preferences.",
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  const toggle = (setter: React.Dispatch<React.SetStateAction<boolean>>) =>
-    setter((prev) => !prev);
+  const Option = ({
+    title,
+    description,
+    icon,
+    active,
+    onClick,
+  }: {
+    title: string;
+    description: string;
+    icon: string;
+    active: boolean;
+    onClick: () => void;
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`
+        w-full flex items-center gap-4 p-4 rounded-xl border
+        transition text-left
+        ${
+          active
+            ? "bg-blue-600 text-white border-blue-600 shadow"
+            : "bg-white text-gray-700 hover:bg-gray-50"
+        }
+      `}
+    >
+      <div
+        className={`
+          w-10 h-10 flex items-center justify-center rounded-lg
+          ${active ? "bg-white/20" : "bg-gray-100"}
+        `}
+      >
+        <span className="text-lg">{icon}</span>
+      </div>
+
+      <div className="flex-1">
+        <p className="font-medium">{title}</p>
+        <p className={`text-xs ${active ? "text-white/80" : "text-gray-500"}`}>
+          {description}
+        </p>
+      </div>
+
+      {active && <span className="text-white">✓</span>}
+    </button>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow">
-        <h2 className="text-2xl font-semibold mb-6 text-center">
-          Accessibility Options
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm">
+        <h2 className="text-2xl font-semibold text-center mb-1">
+          Accessibility
         </h2>
-
-        <p className="text-gray-600 text-sm mb-6 text-center">
-          Choose any options that make the app easier for you to use.
+        <p className="text-sm text-gray-500 text-center mb-6">
+          Make the app easier for you to use
         </p>
 
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-        <form onSubmit={handleContinue} className="space-y-4">
-          {/* Simplified Navigation */}
-          <div
-            onClick={() => toggle(setSimplifiedNavigation)}
-            className={`p-4 border rounded-lg cursor-pointer transition ${
-              simplifiedNavigation
-                ? "bg-blue-600 text-white border-blue-600"
-                : "bg-white text-gray-700"
-            }`}
-          >
-            Simplified Navigation
-          </div>
+        <form onSubmit={handleContinue} className="space-y-3">
+          <Option
+            icon="🧭"
+            title="Simplified Navigation"
+            description="Fewer steps and a simpler interface"
+            active={simplifiedNavigation}
+            onClick={() => setSimplifiedNavigation((v) => !v)}
+          />
 
-          {/* Large Text */}
-          <div
-            onClick={() => toggle(setLargeText)}
-            className={`p-4 border rounded-lg cursor-pointer transition ${
-              largeText
-                ? "bg-blue-600 text-white border-blue-600"
-                : "bg-white text-gray-700"
-            }`}
-          >
-            Large Text Mode
-          </div>
+          <Option
+            icon="🔠"
+            title="Large Text"
+            description="Increase text size across the app"
+            active={largeText}
+            onClick={() => setLargeText((v) => !v)}
+          />
 
-          {/* High Contrast */}
-          <div
-            onClick={() => toggle(setHighContrast)}
-            className={`p-4 border rounded-lg cursor-pointer transition ${
-              highContrast
-                ? "bg-blue-600 text-white border-blue-600"
-                : "bg-white text-gray-700"
-            }`}
-          >
-            High Contrast Mode
-          </div>
+          <Option
+            icon="⚡"
+            title="High Contrast"
+            description="Improves visibility and readability"
+            active={highContrast}
+            onClick={() => setHighContrast((v) => !v)}
+          />
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition mt-4"
+            className="
+              w-full mt-4 bg-blue-600 text-white py-3 rounded-xl
+              hover:bg-blue-700 transition shadow-sm
+            "
           >
-            Continue
+            {loading ? "Saving..." : "Continue"}
           </button>
         </form>
       </div>
