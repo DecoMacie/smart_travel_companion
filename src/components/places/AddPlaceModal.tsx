@@ -61,7 +61,7 @@ const AddPlaceModal: React.FC<AddPlaceModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-[1000]">
+    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-1000">
       <div className="bg-white p-6 rounded-xl w-80 shadow-lg">
         <h2 className="text-lg font-semibold mb-4">Add Place</h2>
 
