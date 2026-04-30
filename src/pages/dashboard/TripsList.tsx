@@ -52,39 +52,75 @@ const TripsList: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold">Your Trips</h2>
+    <div className="min-h-screen bg-gray-50 px-6 py-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900">Your Trips</h1>
+            <p className="text-sm text-gray-500">
+              Plan, manage, and revisit your journeys
+            </p>
+          </div>
 
-        <button
-          onClick={() => navigate("/trips/add")}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-        >
-          + Add Trip
-        </button>
-      </div>
-
-      {/* Empty State */}
-      {trips.length === 0 && (
-        <div className="text-center mt-10">
-          <p className="text-gray-600">You have no trips yet.</p>
-          <p className="text-sm text-gray-400 mt-1">
-            Start by adding your first trip.
-          </p>
+          <button
+            onClick={() => navigate("/trips/add")}
+            className="
+          px-4 py-2 rounded-lg 
+          bg-blue-600 text-white 
+          hover:bg-blue-700 
+          shadow-sm
+          transition
+        "
+          >
+            + New Trip
+          </button>
         </div>
-      )}
 
-      {/* Trips Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {trips.map((trip) => (
-          <TripCard
-            key={trip.id}
-            trip={trip}
-            onClick={() => navigate(`/trips/${trip.id}`)}
-            onDelete={() => handleDelete(trip.id)}
-          />
-        ))}
+        {/* Empty State */}
+        {!loading && trips.length === 0 && (
+          <div className="flex flex-col items-center justify-center mt-20 text-center">
+            <div className="text-5xl mb-4">🌍</div>
+            <h3 className="text-lg font-semibold text-gray-800">
+              No trips yet
+            </h3>
+            <p className="text-gray-500 text-sm mt-1 mb-4">
+              Start planning your next adventure
+            </p>
+
+            <button
+              onClick={() => navigate("/trips/add")}
+              className="
+            px-5 py-2 rounded-lg 
+            bg-blue-600 text-white 
+            hover:bg-blue-700 
+            transition
+          "
+            >
+              Create your first trip
+            </button>
+          </div>
+        )}
+
+        {/* Loading */}
+        {loading && (
+          <p className="text-gray-500 text-sm">Loading your trips…</p>
+        )}
+
+        {/* Trips Grid */}
+        {!loading && trips.length > 0 && (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {trips.map((trip) => (
+              <TripCard
+                key={trip.id}
+                trip={trip}
+                onClick={() => navigate(`/trips/${trip.id}`)}
+                onDelete={() => handleDelete(trip.id)}
+                className="transition transform hover:-translate-y-1"
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

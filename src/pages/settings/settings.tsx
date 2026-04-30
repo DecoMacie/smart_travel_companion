@@ -12,12 +12,14 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-2xl mx-auto p-4 space-y-8">
       {/* Account Section */}
       <div>
-        <h2 className="text-gray-500 text-sm mb-2">Account</h2>
+        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 px-1">
+          Account
+        </h2>
 
-        <div className="bg-white rounded-xl shadow">
+        <div className="bg-white rounded-xl shadow divide-y">
           <SettingsRow
             label="Profile"
             icon="👤"
@@ -33,9 +35,11 @@ const Settings: React.FC = () => {
 
       {/* Preferences Section */}
       <div>
-        <h2 className="text-gray-500 text-sm mb-2">Preferences</h2>
+        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 px-1">
+          Preferences
+        </h2>
 
-        <div className="bg-white rounded-xl shadow">
+        <div className="bg-white rounded-xl shadow divide-y">
           <SettingsRow
             label="Language"
             icon="🌐"
@@ -56,9 +60,11 @@ const Settings: React.FC = () => {
 
       {/* App Section */}
       <div>
-        <h2 className="text-gray-500 text-sm mb-2">App</h2>
+        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 px-1">
+          App
+        </h2>
 
-        <div className="bg-white rounded-xl shadow">
+        <div className="bg-white rounded-xl shadow divide-y">
           <SettingsRow
             label="Privacy Notice"
             icon="🔐"
@@ -74,9 +80,11 @@ const Settings: React.FC = () => {
 
       {/* Support Section */}
       <div>
-        <h2 className="text-gray-500 text-sm mb-2">Support</h2>
+        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 px-1">
+          Support
+        </h2>
 
-        <div className="bg-white rounded-xl shadow">
+        <div className="bg-white rounded-xl shadow divide-y">
           <SettingsRow
             label="Help Center"
             icon="❓"
@@ -91,8 +99,13 @@ const Settings: React.FC = () => {
       </div>
 
       {/* Logout */}
-      <div className="bg-white rounded-xl shadow">
-        <SettingsRow label="Log Out" icon="🚪" onClick={handleLogout} />
+      <div className="bg-white rounded-xl shadow divide-y">
+        <SettingsRow
+          label="Log Out"
+          icon="🚪"
+          onClick={handleLogout}
+          className="text-red-600"
+        />
       </div>
     </div>
   );

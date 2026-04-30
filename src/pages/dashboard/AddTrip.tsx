@@ -5,6 +5,7 @@ import { auth } from "../../services/firebase/firebase";
 import { createTrip } from "../../services/firebase/trips";
 import countriesData from "../../assets/travelcountries.json";
 import { geocodeLocation } from "../../utils/geocode";
+import { getDestinationImage } from "../../utils/getDestinationImage";
 
 interface CountryOption {
   value: string;
@@ -32,6 +33,11 @@ const AddTrip: React.FC = () => {
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (endDate < startDate) {
+      alert("End date cannot be before start date");
+      return;
+    }
 
     if (!user) {
       setError("User not logged in.");
@@ -62,6 +68,10 @@ const AddTrip: React.FC = () => {
         return;
       }
 
+      const imageUrl =
+        (await getDestinationImage(`${fullLocation} travel`)) ||
+        "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg";
+
       await createTrip({
         userId: user.uid,
         title,
@@ -74,6 +84,7 @@ const AddTrip: React.FC = () => {
         endDate,
         notes,
         places: [],
+        imageUrl,
       });
 
       // Reset form
@@ -157,6 +168,7 @@ const AddTrip: React.FC = () => {
             <input
               type="date"
               value={endDate}
+              min={startDate} // Prevents earlier dates
               onChange={(e) => setEndDate(e.target.value)}
               className="w-full border border-gray-300 px-3 py-2 rounded-sm"
             />

@@ -8,11 +8,17 @@ interface Props {
 }
 
 const AddToDayModal: React.FC<Props> = ({ days, onSelect, onClose }) => {
+  if (!days.length) {
+    return (
+      <div className="p-4">
+        <p className="text-gray-500">Loading days...</p>
+      </div>
+    );
+  }
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-xl w-80">
         <h2 className="text-lg font-semibold mb-4">Select Day</h2>
-
         <div className="space-y-2">
           {days.map((day) => (
             <button

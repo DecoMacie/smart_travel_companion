@@ -16,7 +16,11 @@ interface ItineraryProps {
   endDate: string;
 }
 
-const Itinerary: React.FC<ItineraryProps> = ({ tripId, startDate }) => {
+const Itinerary: React.FC<ItineraryProps> = ({
+  tripId,
+  startDate,
+  endDate,
+}) => {
   const [days, setDays] = useState<ItineraryDayType[]>([]);
 
   useEffect(() => {
@@ -41,9 +45,27 @@ const Itinerary: React.FC<ItineraryProps> = ({ tripId, startDate }) => {
     return date.toISOString().split("T")[0];
   };
 
+  const getMaxDays = () => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const diff = end.getTime() - start.getTime();
+
+    return Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+  };
+
   const addDay = async () => {
-    const nextDay =
-      days.length > 0 ? Math.max(...days.map((d) => d.dayNumber)) + 1 : 1;
+    const maxDays = getMaxDays();
+
+    const highestDay =
+      days.length > 0 ? Math.max(...days.map((d) => d.dayNumber)) : 0;
+
+    if (highestDay >= maxDays) {
+      alert("You've reached the maximum number of days for this trip.");
+      return;
+    }
+
+    const nextDay = days.length + 1;
 
     const date = getDateForDay(startDate, nextDay);
 
@@ -54,7 +76,7 @@ const Itinerary: React.FC<ItineraryProps> = ({ tripId, startDate }) => {
   };
 
   return (
-    <div>
+    <div className="mt-6 p-4 bg-white rounded-xl shadow">
       <h3 className="text-lg font-semibold mb-3">Itinerary</h3>
 
       <div className="space-y-4">
@@ -65,7 +87,12 @@ const Itinerary: React.FC<ItineraryProps> = ({ tripId, startDate }) => {
 
       <button
         onClick={addDay}
-        className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+        disabled={days.length >= getMaxDays()}
+        className={`mt-4 w-full py-2 rounded-lg transition ${
+          days.length >= getMaxDays()
+            ? "bg-gray-300 cursor-not-allowed"
+            : "bg-blue-600 text-white hover:bg-blue-700"
+        }`}
       >
         + Add Day
       </button>

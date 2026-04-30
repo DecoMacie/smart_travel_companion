@@ -28,6 +28,7 @@ export interface Trip {
   endDate: string;
   notes?: string;
   places?: Place[]
+  imageUrl?: string | null;
 }
 
 // Fetch all trips for a specific user
