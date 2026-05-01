@@ -2,15 +2,19 @@ import { Place, PlaceType } from "./types";
 
 type OverpassElement = {
   id: number;
-  lat: number;
-  lon: number;
+  lat?: number;
+  lon?: number;
   center?: {
-    lat: number; 
-    lon: number
+    lat: number;
+    lon: number;
   };
   tags?: {
     name?: string;
   };
+};
+
+type OverpassResponse = {
+  elements: OverpassElement[];
 };
 
 export const fetchNearbyPlaces = async (
@@ -18,89 +22,64 @@ export const fetchNearbyPlaces = async (
   lon: number,
   type: PlaceType
 ): Promise<Place[]> => {
-
   const radius = 1200;
 
-  const queries: Record<PlaceType, string> = {
-    restaurant: `
-      (
-        node["amenity"="restaurant"](around:${radius},${lat},${lon});
-        way["amenity"="restaurant"](around:${radius},${lat},${lon});
-        relation["amenity"="restaurant"](around:${radius},${lat},${lon});
-      );
-    `,
-    hotel: `
-      (
-        node["tourism"="hotel"](around:${radius},${lat},${lon});
-        way["tourism"="hotel"](around:${radius},${lat},${lon});
-        relation["tourism"="hotel"](around:${radius},${lat},${lon});
-      );
-    `,
-    attraction: `
-      (
-        node["tourism"="attraction"](around:${radius},${lat},${lon});
-        way["tourism"="attraction"](around:${radius},${lat},${lon});
-        relation["tourism"="attraction"](around:${radius},${lat},${lon});
-      );
-    `,
+  const tagMap: Record<PlaceType, string> = {
+    restaurant: `"amenity"="restaurant"`,
+    hotel: `"tourism"="hotel"`,
+    attraction: `"tourism"="attraction"`,
   };
 
   const query = `
     [out:json][timeout:10];
-    ${queries[type]}
+    (
+      node[${tagMap[type]}](around:${radius},${lat},${lon});
+      way[${tagMap[type]}](around:${radius},${lat},${lon});
+      relation[${tagMap[type]}](around:${radius},${lat},${lon});
+    );
     out center;
   `;
 
-  const endpoints = [
-    "https://overpass.kumi.systems/api/interpreter",
-    "https://overpass-api.de/api/interpreter",
-    "https://lz4.overpass-api.de/api/interpreter",
-  ];
+  try {
+    const res = await fetch("/api/overpass", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query }),
+    });
 
-  for (const url of endpoints) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 12000);
-
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        body: query,
-        headers: {
-          "Content-Type": "text/plain",
-        },
-        signal: controller.signal,
-      });
-
-      if (!res.ok) {
-        console.warn(`Overpass ${url} failed: ${res.status}`);
-        continue;
-      }
-
-      const data = await res.json();
-
-      return (data.elements as OverpassElement[])
-        .filter((el) => el.tags?.name)
-        .map((el): Place => ({
-          id: `ext-${type}-${el.id}`,
-          name: el.tags!.name!,
-          lat: el.lat ?? el.center?.lat,
-          lon: el.lon ?? el.center?.lon,
-          type,
-          source: "external",
-        }))
-        .filter((p) => p.lat != null && p.lon != null)
-        .slice(0, 20);
-
-    } catch (err) {
-      console.warn(`Overpass ${url} error:`, err);
-    } finally {
-      clearTimeout(timeout);
+    if (!res.ok) {
+      console.error("Overpass API error:", res.status);
+      return [];
     }
 
-    // small delay to avoid hammering servers
-    await new Promise((r) => setTimeout(r, 300));
-  }
+    const data: OverpassResponse = await res.json();
 
-  console.error("All Overpass endpoints failed");
-  return [];
+  const mapped = data.elements.map((el): Place | null => {
+    const finalLat = el.lat ?? el.center?.lat;
+    const finalLon = el.lon ?? el.center?.lon;
+
+    if (!finalLat || !finalLon) return null;
+    if (!el.tags?.name) return null;
+
+    return {
+      id: `ext-${type}-${el.id}`,
+      name: el.tags.name,
+      lat: finalLat,
+      lon: finalLon,
+      type,
+      source: "external",
+    };
+  });
+
+  const places: Place[] = mapped.filter(
+    (p): p is Place => p !== null
+  ).slice(0, 20);
+
+  return places;
+  } catch (err) {
+    console.error("Overpass fetch error:", err);
+    return [];
+  }
 };
