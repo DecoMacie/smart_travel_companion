@@ -14,7 +14,7 @@ export const fetchNearbyPlaces = async (
   lon: number,
   type: PlaceType
 ): Promise<Place[]> => {
-  const radius = 2000;
+  const radius = 1200; // 🔽 reduced for reliability
 
   const queries: Record<PlaceType, string> = {
     restaurant: `node["amenity"="restaurant"](around:${radius},${lat},${lon});`,
@@ -23,32 +23,45 @@ export const fetchNearbyPlaces = async (
   };
 
   const query = `
-    [out:json];
+    [out:json][timeout:10];
     ${queries[type]}
-    out;
+    out body;
   `;
 
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000); // ⏱️ hard timeout
+
   try {
-    const res = await fetch("https://overpass-api.de/api/interpreter", {
-      method: "POST",
-      body: query,
-    });
+    const res = await fetch(
+      "https://overpass.kumi.systems/api/interpreter", // 🔥 better endpoint
+      {
+        method: "POST",
+        body: query,
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        signal: controller.signal,
+      }
+    );
+
+    clearTimeout(timeout);
 
     if (!res.ok) {
-      throw new Error("Failed to fetch places");
+      throw new Error(`Overpass error: ${res.status}`);
     }
 
     const data = await res.json();
 
     return (data.elements as OverpassElement[])
       .filter((el) => el.tags?.name)
+      .slice(0, 20) // 🔥 limit results (huge UX + perf win)
       .map((el) => ({
         id: `ext-${type}-${el.id}`,
         name: el.tags!.name!,
         lat: el.lat,
         lon: el.lon,
         type,
-        source: "external", // 👈 nice improvement using your model
+        source: "external",
       }));
   } catch (err) {
     console.error("Overpass error:", err);
