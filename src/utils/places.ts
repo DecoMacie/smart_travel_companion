@@ -22,7 +22,7 @@ export const fetchNearbyPlaces = async (
   lon: number,
   type: PlaceType
 ): Promise<Place[]> => {
-  const radius = 1200;
+  const radius = 200;
 
   const tagMap: Record<PlaceType, string> = {
     restaurant: `"amenity"="restaurant"`,
