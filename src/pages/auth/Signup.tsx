@@ -83,7 +83,7 @@ const Signup: React.FC = () => {
           Already have an account?{" "}
           <span
             className="text-blue-600 cursor-pointer hover:underline"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/")}
           >
             Login
           </span>
