@@ -55,29 +55,30 @@ export const fetchNearbyPlaces = async (
     }
 
     const data: OverpassResponse = await res.json();
+    const elements = data.elements ?? [];
 
-  const mapped = data.elements.map((el): Place | null => {
-    const finalLat = el.lat ?? el.center?.lat;
-    const finalLon = el.lon ?? el.center?.lon;
+    const mapped = elements.map((el): Place | null => {
+      const finalLat = el.lat ?? el.center?.lat;
+      const finalLon = el.lon ?? el.center?.lon;
 
-    if (!finalLat || !finalLon) return null;
-    if (!el.tags?.name) return null;
+      if (finalLat == null || finalLon == null) return null;
+      if (!el.tags?.name) return null;
 
-    return {
-      id: `ext-${type}-${el.id}`,
-      name: el.tags.name,
-      lat: finalLat,
-      lon: finalLon,
-      type,
-      source: "external",
-    };
-  });
+      return {
+        id: `ext-${type}-${el.id}`,
+        name: el.tags.name,
+        lat: finalLat,
+        lon: finalLon,
+        type,
+        source: "external",
+      };
+    });
 
-  const places: Place[] = mapped.filter(
-    (p): p is Place => p !== null
-  ).slice(0, 20);
+    const places: Place[] = mapped.filter(
+      (p): p is Place => p !== null
+    ).slice(0, 20);
 
-  return places;
+    return places;
   } catch (err) {
     console.error("Overpass fetch error:", err);
     return [];
