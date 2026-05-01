@@ -173,21 +173,21 @@ const TripDetails: React.FC = () => {
       const results: Place[] = [];
       const newCache = { ...cache };
 
-      for (const type of activeFilters) {
-        if (newCache[type]) {
-          results.push(...(newCache[type] as Place[]));
-          continue;
-        }
+      const filterResults = await Promise.all(
+        activeFilters.map(async (type) => {
+          if (cache[type]) return cache[type];
 
-        const data = await fetchNearbyPlaces(
-          trip.destination.lat,
-          trip.destination.lon,
-          type,
-        );
+          const data = await fetchNearbyPlaces(
+            trip.destination.lat,
+            trip.destination.lon,
+            type,
+          );
 
-        newCache[type] = data;
-        results.push(...data);
-      }
+          return data;
+        }),
+      );
+
+      setExternalPlaces(filterResults.flat());
 
       setCache(newCache);
       setExternalPlaces(results);
@@ -195,7 +195,7 @@ const TripDetails: React.FC = () => {
     };
 
     load();
-  }, [activeFilters, trip]);
+  }, [activeFilters, trip, cache]);
 
   useEffect(() => {
     let isMounted = true;

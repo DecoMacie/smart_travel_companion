@@ -1,4 +1,5 @@
 export type PlaceType = "attraction" | "hotel" | "restaurant";
+export type PlaceSource = "external" | "user";
 
 export interface Place {
   id: string;
@@ -7,7 +8,7 @@ export interface Place {
   name: string;
   address?: string;
   type: PlaceType;
-  source?: "user" | "external"; 
+  source?: PlaceSource; 
 }
 
 export interface ItineraryDayType {
