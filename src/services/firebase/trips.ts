@@ -1,4 +1,4 @@
-import { db, auth } from "./firebase";
+import { db } from "./firebase";
 import { Place } from "../../utils/types";
 import {
   collection,
@@ -48,10 +48,6 @@ export const getTripById = async (tripId: string): Promise<Trip | null> => {
   const snapshot = await getDoc(ref);
 
   if (!snapshot.exists()) return null;
-
-  // Delete on Production
-  console.log("Fetching trip:", tripId);
-  console.log("Current user:", auth.currentUser?.uid);
 
   return {
     id: snapshot.id,

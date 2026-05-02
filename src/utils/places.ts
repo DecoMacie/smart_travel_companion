@@ -2,81 +2,56 @@ import { Place, PlaceType } from "./types";
 
 type OverpassElement = {
   id: number;
-  lat?: number;
-  lon?: number;
-  center?: {
-    lat: number;
-    lon: number;
-  };
+  lat: number;
+  lon: number;
   tags?: {
     name?: string;
   };
 };
 
-type OverpassResponse = {
-  elements: OverpassElement[];
-};
-
-export const fetchNearbyPlacesFromOverpass = async (
+export const fetchNearbyPlaces = async (
   lat: number,
   lon: number,
   type: PlaceType
 ): Promise<Place[]> => {
-  const radius = 1200;
+  const radius = 2000;
 
-  const tagMap: Record<PlaceType, string> = {
-    restaurant: `"amenity"="restaurant"`,
-    hotel: `"tourism"="hotel"`,
-    attraction: `"tourism"="attraction"`,
+  const queries: Record<PlaceType, string> = {
+    restaurant: `node["amenity"="restaurant"](around:${radius},${lat},${lon});`,
+    hotel: `node["tourism"="hotel"](around:${radius},${lat},${lon});`,
+    attraction: `node["tourism"="attraction"](around:${radius},${lat},${lon});`,
   };
 
   const query = `
-    [out:json][timeout:10];
-    (
-      node[${tagMap[type]}](around:${radius},${lat},${lon});
-      way[${tagMap[type]}](around:${radius},${lat},${lon});
-      relation[${tagMap[type]}](around:${radius},${lat},${lon});
-    );
-    out center;
+    [out:json];
+    ${queries[type]}
+    out;
   `;
 
   try {
     const res = await fetch("https://overpass-api.de/api/interpreter", {
       method: "POST",
-      headers: {
-        "Content-Type": "text/plain", // ✅ critical fix
-      },
       body: query,
     });
 
     if (!res.ok) {
-      console.error("Overpass API error:", res.status);
-      return [];
+      throw new Error("Failed to fetch places");
     }
 
-    const data: OverpassResponse = await res.json();
+    const data = await res.json();
 
-    return (data.elements ?? [])
-      .map((el): Place | null => {
-        const latFinal = el.lat ?? el.center?.lat;
-        const lonFinal = el.lon ?? el.center?.lon;
-
-        if (latFinal == null || lonFinal == null) return null;
-        if (!el.tags?.name) return null;
-
-        return {
-          id: `ext-${type}-${el.id}`,
-          name: el.tags.name,
-          lat: latFinal,
-          lon: lonFinal,
-          type,
-          source: "external" as const,
-        };
-      })
-      .filter((p): p is Place => p !== null)
-      .slice(0, 20);
+    return (data.elements as OverpassElement[])
+      .filter((el) => el.tags?.name)
+      .map((el) => ({
+        id: `ext-${type}-${el.id}`,
+        name: el.tags!.name!,
+        lat: el.lat,
+        lon: el.lon,
+        type,
+        source: "external", // 👈 nice improvement using your model
+      }));
   } catch (err) {
-    console.error("Overpass fetch error:", err);
+    console.error("Overpass error:", err);
     return [];
   }
 };

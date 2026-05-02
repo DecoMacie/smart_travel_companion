@@ -14,8 +14,6 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-console.log("API KEY:", import.meta.env.VITE_FIREBASE_API_KEY);
-
 const app = initializeApp(firebaseConfig);
 
 // Export Firebase services

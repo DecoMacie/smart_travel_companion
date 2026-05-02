@@ -3,8 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getTripById, Trip } from "../../services/firebase/trips";
 import TripMap from "../../components/map/TripMap";
 import AddPlaceModal from "../../components/places/AddPlaceModal";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../services/firebase/firebase";
 import {
   collection,
   getDocs,
@@ -17,7 +15,7 @@ import { Place, ItineraryDayType } from "../../utils/types";
 import PlaceCard from "../../components/places/PlaceCard";
 import FlightPricesCard from "../../components/flights/FlightPricesCard";
 import Itinerary from "../../components/itinerary/Itinerary";
-import { getCachedPlaces } from "../../utils/getCachedPlaces";
+import { fetchNearbyPlaces } from "../../utils/places";
 import AddToDayModal from "../../components/itinerary/AddToDayModal";
 import { buildBookingLink } from "../../utils/hotelLinks";
 
@@ -175,21 +173,21 @@ const TripDetails: React.FC = () => {
       const results: Place[] = [];
       const newCache = { ...cache };
 
-      const filterResults = await Promise.all(
-        activeFilters.map(async (type) => {
-          if (cache[type]) return cache[type];
+      for (const type of activeFilters) {
+        if (newCache[type]) {
+          results.push(...(newCache[type] as Place[]));
+          continue;
+        }
 
-          const data = await getCachedPlaces(
-            trip.destination.lat,
-            trip.destination.lon,
-            type,
-          );
+        const data = await fetchNearbyPlaces(
+          trip.destination.lat,
+          trip.destination.lon,
+          type,
+        );
 
-          return data;
-        }),
-      );
-
-      setExternalPlaces(filterResults.flat());
+        newCache[type] = data;
+        results.push(...data);
+      }
 
       setCache(newCache);
       setExternalPlaces(results);
@@ -200,24 +198,29 @@ const TripDetails: React.FC = () => {
   }, [activeFilters, trip]);
 
   useEffect(() => {
-    let didFetch = false;
+    let isMounted = true;
 
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (!user || !id || didFetch) return;
-
-      didFetch = true;
+    const loadTrip = async () => {
+      if (!id) {
+        setLoading(false);
+        return;
+      }
 
       try {
         const data = await getTripById(id);
-        setTrip(data);
+        if (isMounted) setTrip(data);
       } catch {
-        setError("Failed to load trip.");
+        if (isMounted) setError("Failed to load trip.");
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
-    });
+    };
 
-    return () => unsubscribe();
+    loadTrip();
+
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
 
   useEffect(() => {
