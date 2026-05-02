@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getTripById, Trip } from "../../services/firebase/trips";
 import TripMap from "../../components/map/TripMap";
 import AddPlaceModal from "../../components/places/AddPlaceModal";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../services/firebase/firebase";
 import {
   collection,
   getDocs,
@@ -15,7 +17,7 @@ import { Place, ItineraryDayType } from "../../utils/types";
 import PlaceCard from "../../components/places/PlaceCard";
 import FlightPricesCard from "../../components/flights/FlightPricesCard";
 import Itinerary from "../../components/itinerary/Itinerary";
-import { fetchNearbyPlaces } from "../../utils/places";
+import { getCachedPlaces } from "../../utils/getCachedPlaces";
 import AddToDayModal from "../../components/itinerary/AddToDayModal";
 import { buildBookingLink } from "../../utils/hotelLinks";
 
@@ -177,7 +179,7 @@ const TripDetails: React.FC = () => {
         activeFilters.map(async (type) => {
           if (cache[type]) return cache[type];
 
-          const data = await fetchNearbyPlaces(
+          const data = await getCachedPlaces(
             trip.destination.lat,
             trip.destination.lon,
             type,
@@ -198,29 +200,24 @@ const TripDetails: React.FC = () => {
   }, [activeFilters, trip]);
 
   useEffect(() => {
-    let isMounted = true;
+    let didFetch = false;
 
-    const loadTrip = async () => {
-      if (!id) {
-        setLoading(false);
-        return;
-      }
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user || !id || didFetch) return;
+
+      didFetch = true;
 
       try {
         const data = await getTripById(id);
-        if (isMounted) setTrip(data);
+        setTrip(data);
       } catch {
-        if (isMounted) setError("Failed to load trip.");
+        setError("Failed to load trip.");
       } finally {
-        if (isMounted) setLoading(false);
+        setLoading(false);
       }
-    };
+    });
 
-    loadTrip();
-
-    return () => {
-      isMounted = false;
-    };
+    return () => unsubscribe();
   }, [id]);
 
   useEffect(() => {
