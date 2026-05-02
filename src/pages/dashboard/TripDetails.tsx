@@ -195,7 +195,7 @@ const TripDetails: React.FC = () => {
     };
 
     load();
-  }, [activeFilters, trip, cache]);
+  }, [activeFilters, trip]);
 
   useEffect(() => {
     let isMounted = true;
