@@ -3,6 +3,15 @@ import { auth, db} from "./firebase"
 import { doc, setDoc } from "firebase/firestore";
 
 export const signupUser = async (email: string, password: string, name: string) => {
+   email = email.trim();
+
+  if (!email || !password) {
+    throw new Error("Missing email or password");
+  }
+
+  if (password.length < 6) {
+    throw new Error("Password must be at least 6 characters");
+  }
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const user = userCredential.user;
 
