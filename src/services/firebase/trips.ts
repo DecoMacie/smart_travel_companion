@@ -1,4 +1,4 @@
-import { db } from "./firebase";
+import { db, auth } from "./firebase";
 import { Place } from "../../utils/types";
 import {
   collection,
@@ -31,28 +31,36 @@ export interface Trip {
   imageUrl?: string | null;
 }
 
-// Fetch all trips for a specific user
-export const getUserTrips = async (userId: string): Promise<Trip[]> => {
-  const q = query(collection(db, "trips"), where("userId", "==", userId));
-  const snapshot = await getDocs(q);
+/**
+ * SAFE: always checks auth first
+ */
+export const getTripById = async (tripId: string): Promise<Trip | null> => {
+  const user = auth.currentUser;
 
-   return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as Omit<Trip, "id">),
-  }));
+  if (!user) return null;
+
+  const ref = doc(db, "trips", tripId);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) return null;
+
+  const data = snap.data() as Omit<Trip, "id">;
+
+  if (data.userId !== user.uid) return null;
+
+  return { id: snap.id, ...data };
 };
 
-// Fetch a single trip by ID
-export const getTripById = async (tripId: string): Promise<Trip | null> => {
-  const ref = doc(db, "trips", tripId);
-  const snapshot = await getDoc(ref);
+export const getUserTrips = async (userId: string): Promise<Trip[]> => {
+  if (!userId) return [];
 
-  if (!snapshot.exists()) return null;
+  const q = query(collection(db, "trips"), where("userId", "==", userId));
+  const snap = await getDocs(q);
 
-  return {
-    id: snapshot.id,
-    ...snapshot.data()
-  } as Trip;
+  return snap.docs.map((d) => ({
+    id: d.id,
+    ...(d.data() as Omit<Trip, "id">),
+  }));
 };
 
 // Create a new trip

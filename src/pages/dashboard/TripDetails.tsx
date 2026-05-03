@@ -15,9 +15,10 @@ import { Place, ItineraryDayType } from "../../utils/types";
 import PlaceCard from "../../components/places/PlaceCard";
 import FlightPricesCard from "../../components/flights/FlightPricesCard";
 import Itinerary from "../../components/itinerary/Itinerary";
-import { fetchNearbyPlaces } from "../../utils/places";
+import { getCachedPlaces } from "../../utils/getCachedPlaces";
 import AddToDayModal from "../../components/itinerary/AddToDayModal";
 import { buildBookingLink } from "../../utils/hotelLinks";
+import { useAuth } from "../../context/AuthContext";
 
 const FILTERS = ["restaurant", "hotel", "attraction"] as const;
 type FilterType = (typeof FILTERS)[number];
@@ -25,7 +26,7 @@ type FilterType = (typeof FILTERS)[number];
 const TripDetails: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const { user, loading: authLoading } = useAuth();
   const [trip, setTrip] = useState<Trip | null>(null);
   const [places, setPlaces] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,7 +35,6 @@ const TripDetails: React.FC = () => {
   const [error, setError] = useState("");
   const [activeFilters, setActiveFilters] = useState<FilterType[]>([]);
   const [externalPlaces, setExternalPlaces] = useState<Place[]>([]);
-  const [cache, setCache] = useState<Partial<Record<FilterType, Place[]>>>({});
 
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [showDayModal, setShowDayModal] = useState(false);
@@ -50,16 +50,11 @@ const TripDetails: React.FC = () => {
   }, [places, externalPlaces]);
 
   const handleDeletePlace = async (placeId: string) => {
-    try {
-      if (!trip?.id) return;
+    if (!user || !trip?.id) return;
 
-      await deleteDoc(doc(db, "trips", trip.id, "places", placeId));
+    await deleteDoc(doc(db, "trips", trip.id, "places", placeId));
 
-      // refresh UI
-      setPlaces((prev) => prev.filter((p) => p.id !== placeId));
-    } catch (err) {
-      console.error("Failed to delete place:", err);
-    }
+    setPlaces((prev) => prev.filter((p) => p.id !== placeId));
   };
 
   const loadPlaces = async (tripId: string) => {
@@ -85,22 +80,17 @@ const TripDetails: React.FC = () => {
   };
 
   const handleSaveExternalPlace = async (place: Place) => {
-    if (!trip?.id) return;
+    if (!user || !trip?.id) return;
 
-    try {
-      await addDoc(collection(db, "trips", trip.id, "places"), {
-        name: place.name,
-        lat: place.lat,
-        lon: place.lon,
-        type: place.type,
-        source: "user",
-      });
+    await addDoc(collection(db, "trips", trip.id, "places"), {
+      name: place.name,
+      lat: place.lat,
+      lon: place.lon,
+      type: place.type,
+      source: "user",
+    });
 
-      // refresh
-      loadPlaces(trip.id);
-    } catch (err) {
-      console.error("Failed to save place:", err);
-    }
+    loadPlaces(trip.id);
   };
 
   const loadDays = async (tripId: string) => {
@@ -153,84 +143,89 @@ const TripDetails: React.FC = () => {
     }
   };
 
+  // LOAD ITINERARY DAYS
+  // ----------------------------
   useEffect(() => {
-    if (trip?.id) {
-      loadDays(trip.id);
+    if (!user || !trip?.id) return;
+
+    loadDays(trip.id);
+  }, [user, trip?.id]);
+  // ----------------------------
+
+  // LOAD EXTERNAL PLACES (Overpass / Cache)
+  // ----------------------------
+  useEffect(() => {
+    if (!user || !trip?.destination) return;
+
+    if (activeFilters.length === 0) {
+      setExternalPlaces([]);
+      return;
     }
-  }, [trip]);
 
-  useEffect(() => {
-    const load = async () => {
-      if (!trip?.destination) return;
-
-      if (activeFilters.length === 0) {
-        setExternalPlaces([]);
-        return;
-      }
-
+    const loadExternal = async () => {
       setLoadingPlaces(true);
 
-      const results: Place[] = [];
-      const newCache = { ...cache };
+      try {
+        const results: Place[] = [];
 
-      for (const type of activeFilters) {
-        if (newCache[type]) {
-          results.push(...(newCache[type] as Place[]));
-          continue;
+        for (const type of activeFilters) {
+          const data = await getCachedPlaces(
+            trip.destination.lat,
+            trip.destination.lon,
+            type,
+          );
+
+          results.push(...data);
         }
 
-        const data = await fetchNearbyPlaces(
-          trip.destination.lat,
-          trip.destination.lon,
-          type,
-        );
-
-        newCache[type] = data;
-        results.push(...data);
+        setExternalPlaces(results);
+      } catch (err) {
+        console.error("External places failed:", err);
+      } finally {
+        setLoadingPlaces(false);
       }
-
-      setCache(newCache);
-      setExternalPlaces(results);
-      setLoadingPlaces(false);
     };
 
-    load();
-  }, [activeFilters, trip]);
+    loadExternal();
+  }, [user, trip?.destination, activeFilters]);
+  // ----------------------------
 
+  // LOAD TRIP
+  // ----------------------------
   useEffect(() => {
-    let isMounted = true;
+    if (authLoading) return; // 🚨 WAIT for Firebase
+    if (!user || !id) return;
 
     const loadTrip = async () => {
-      if (!id) {
-        setLoading(false);
-        return;
-      }
-
+      setLoading(true);
       try {
         const data = await getTripById(id);
-        if (isMounted) setTrip(data);
-      } catch {
-        if (isMounted) setError("Failed to load trip.");
+        setTrip(data);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load trip.");
       } finally {
-        if (isMounted) setLoading(false);
+        setLoading(false);
       }
     };
 
+    console.log("User UID:", user?.uid);
+
     loadTrip();
+  }, [user, id, authLoading]);
+  // ----------------------------
 
-    return () => {
-      isMounted = false;
-    };
-  }, [id]);
-
+  // LOAD SAVED PLACES
+  // ----------------------------
   useEffect(() => {
-    if (trip?.id) {
-      loadPlaces(trip.id);
-    }
-  }, [trip]);
+    if (!user || !trip?.id) return;
 
-  if (loading) {
-    return <p className="p-6 text-gray-500">Loading trip details…</p>;
+    loadPlaces(trip.id);
+  }, [user, trip?.id]);
+  // ----------------------------
+
+  if (authLoading || loading) {
+    return <p className="p-6 text-gray-500">Loading…</p>;
   }
 
   if (!trip) {

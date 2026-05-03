@@ -13,8 +13,18 @@ import TripsList from "./pages/dashboard/TripsList";
 import Home from "./pages/dashboard/Home";
 import Settings from "./pages/settings/SettingsPage";
 import ChangePassword from "./components/settings/ChangePassword";
+import { useAuth } from "./context/AuthContext";
 
 function App() {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-gray-500">Loading app…</p>
+      </div>
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>
