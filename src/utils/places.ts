@@ -1,80 +1,65 @@
 import { Place, PlaceType } from "./types";
 
-type OverpassElement = {
-  id: number;
-  lat?: number;
-  lon?: number;
-  center?: {
+type GeoapifyFeature = {
+  properties: {
+    place_id: string;
+    name?: string;
     lat: number;
     lon: number;
-  };
-  tags?: {
-    name?: string;
+    categories?: string[];
+    address_line2?: string;
   };
 };
 
-type OverpassResponse = {
-  elements: OverpassElement[];
+type GeoapifyResponse = {
+  features: GeoapifyFeature[];
 };
 
-export const fetchNearbyPlacesFromOverpass = async (
+const GEOAPIFY_KEY = import.meta.env.VITE_GEOAPIFY_API_KEY;
+
+const categoryMap: Record<PlaceType, string> = {
+  restaurant: "catering.restaurant",
+  hotel: "accommodation.hotel",
+  attraction: "tourism.sights",
+};
+
+export const fetchNearbyPlaces = async (
   lat: number,
   lon: number,
   type: PlaceType
 ): Promise<Place[]> => {
   const radius = 1200;
 
-  const tagMap: Record<PlaceType, string> = {
-    restaurant: `"amenity"="restaurant"`,
-    hotel: `"tourism"="hotel"`,
-    attraction: `"tourism"="attraction"`,
-  };
-
-  const query = `
-    [out:json][timeout:10];
-    (
-      node[${tagMap[type]}](around:${radius},${lat},${lon});
-      way[${tagMap[type]}](around:${radius},${lat},${lon});
-      relation[${tagMap[type]}](around:${radius},${lat},${lon});
-    );
-    out center;
-  `;
+   const url = `https://api.geoapify.com/v2/places?categories=${categoryMap[type]}&filter=circle:${lon},${lat},${radius}&limit=20&apiKey=${GEOAPIFY_KEY}`;
 
   try {
-    const res = await fetch("/api/overpass", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query })
-    });
+    const res = await fetch(url);
 
     if (!res.ok) {
-      console.error("Overpass API error:", res.status);
+      console.error("Geopify error:", res.status);
       return [];
     }
 
-    const data: OverpassResponse = await res.json();
+    const data: GeoapifyResponse = await res.json();
 
-    return (data.elements ?? [])
-      .map((el): Place | null => {
-        const latFinal = el.lat ?? el.center?.lat;
-        const lonFinal = el.lon ?? el.center?.lon;
+    return (data.features || [])
+      .map((f): Place | null => {
+        const props = f.properties;
 
-        if (latFinal == null || lonFinal == null) return null;
-        if (!el.tags?.name) return null;
+        if (!props.name) return null;
 
         return {
-          id: `ext-${type}-${el.id}`,
-          name: el.tags.name,
-          lat: latFinal,
-          lon: lonFinal,
+          id: `geo-${type}-${props.place_id}`,
+          name: props.name,
+          lat: props.lat,
+          lon: props.lon,
           type,
-          source: "external" as const,
+          source: "external",
         };
       })
-      .filter((p): p is Place => p !== null)
-      .slice(0, 20);
+       .filter((p: Place | null): p is Place => p !== null);
   } catch (err) {
-    console.error("Overpass fetch error:", err);
+    console.error("Geoapify fetch error:", err);
     return [];
   }
 };
