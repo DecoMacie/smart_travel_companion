@@ -8,7 +8,7 @@ const Settings: React.FC = () => {
 
   const handleLogout = async () => {
     await auth.signOut();
-    navigate("/login");
+    navigate("/");
   };
 
   return (
