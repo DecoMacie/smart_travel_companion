@@ -1,101 +1,75 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+
 import { db } from "../../services/firebase/firebase";
-import {
-  collection,
-  addDoc,
-  orderBy,
-  query,
-  onSnapshot,
-} from "firebase/firestore";
+
+import { collection, writeBatch, doc, getDocs } from "firebase/firestore";
+
 import ItineraryDay from "./ItineraryDay";
+
 import { ItineraryDayType } from "../../utils/types";
+
+import { generateTripDays } from "../../utils/generateTripDays";
 
 interface ItineraryProps {
   tripId: string;
   startDate: string;
   endDate: string;
+  days: ItineraryDayType[];
 }
 
 const Itinerary: React.FC<ItineraryProps> = ({
   tripId,
   startDate,
   endDate,
+  days,
 }) => {
-  const [days, setDays] = useState<ItineraryDayType[]>([]);
-
+  // Create itinerary docs once
   useEffect(() => {
-    const ref = collection(db, "trips", tripId, "itinerary");
-    const q = query(ref, orderBy("dayNumber", "asc"));
+    const createDaysIfNeeded = async () => {
+      if (!tripId) return;
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const list: ItineraryDayType[] = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...(doc.data() as Omit<ItineraryDayType, "id">),
-      }));
+      try {
+        const ref = collection(db, "trips", tripId, "itinerary");
 
-      setDays(list);
-    });
+        const snapshot = await getDocs(ref);
 
-    return () => unsubscribe();
-  }, [tripId]);
+        // Prevent duplicates
+        if (!snapshot.empty) return;
 
-  const getDateForDay = (start: string, dayNumber: number) => {
-    const date = new Date(start);
-    date.setDate(date.getDate() + (dayNumber - 1));
-    return date.toISOString().split("T")[0];
-  };
+        const generatedDays = generateTripDays(startDate, endDate);
 
-  const getMaxDays = () => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+        const batch = writeBatch(db);
 
-    const diff = end.getTime() - start.getTime();
+        generatedDays.forEach((day) => {
+          const docRef = doc(
+            db,
+            "trips",
+            tripId,
+            "itinerary",
+            `day-${day.dayNumber}`,
+          );
 
-    return Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
-  };
+          batch.set(docRef, day, { merge: true });
+        });
 
-  const addDay = async () => {
-    const maxDays = getMaxDays();
+        await batch.commit();
+      } catch (err) {
+        console.error("Failed to create itinerary:", err);
+      }
+    };
 
-    const highestDay =
-      days.length > 0 ? Math.max(...days.map((d) => d.dayNumber)) : 0;
-
-    if (highestDay >= maxDays) {
-      alert("You've reached the maximum number of days for this trip.");
-      return;
-    }
-
-    const nextDay = days.length + 1;
-
-    const date = getDateForDay(startDate, nextDay);
-
-    await addDoc(collection(db, "trips", tripId, "itinerary"), {
-      dayNumber: nextDay,
-      date,
-    });
-  };
+    createDaysIfNeeded();
+  }, [tripId, startDate, endDate]);
 
   return (
     <div className="mt-6 p-4 bg-white rounded-xl shadow">
-      <h3 className="text-lg font-semibold mb-3">Itinerary</h3>
+      <h3 className="text-lg font-semibold mb-4">Itinerary</h3>
 
       <div className="space-y-4">
         {days.map((day) => (
           <ItineraryDay key={day.id} tripId={tripId} day={day} />
         ))}
       </div>
-
-      <button
-        onClick={addDay}
-        disabled={days.length >= getMaxDays()}
-        className={`mt-4 w-full py-2 rounded-lg transition ${
-          days.length >= getMaxDays()
-            ? "bg-gray-300 cursor-not-allowed"
-            : "bg-blue-600 text-white hover:bg-blue-700"
-        }`}
-      >
-        + Add Day
-      </button>
     </div>
   );
 };

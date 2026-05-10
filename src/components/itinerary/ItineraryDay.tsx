@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../services/firebase/firebase";
+
 import {
   collection,
   addDoc,
-  orderBy,
-  query,
-  onSnapshot,
   deleteDoc,
   doc,
+  onSnapshot,
+  orderBy,
+  query,
   updateDoc,
+  // writeBatch, //for future batch processes (reorder)
 } from "firebase/firestore";
+
 import { ItineraryDayType } from "../../utils/types";
 
 interface ItineraryItem {
@@ -18,7 +21,6 @@ interface ItineraryItem {
   type: "note" | "place";
   order: number;
 
-  // 👇 optional for places
   placeId?: string;
   lat?: number;
   lon?: number;
@@ -34,41 +36,10 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
   const [newItem, setNewItem] = useState("");
 
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
+
   const [editValue, setEditValue] = useState("");
 
-  const handleDelete = async (itemId: string) => {
-    try {
-      await deleteDoc(
-        doc(db, "trips", tripId, "itinerary", day.id, "items", itemId),
-      );
-    } catch (err) {
-      console.error("Failed to delete item:", err);
-    }
-  };
-
-  const handleEdit = (item: ItineraryItem) => {
-    setEditingItemId(item.id);
-    setEditValue(item.name);
-  };
-
-  const handleSaveEdit = async (itemId: string) => {
-    try {
-      await updateDoc(
-        doc(db, "trips", tripId, "itinerary", day.id, "items", itemId),
-        {
-          name: editValue.trim(),
-        },
-      );
-
-      setEditingItemId(null);
-      setEditValue("");
-    } catch (err) {
-      console.error("Failed to update item:", err);
-    }
-  };
-  const nextOrder =
-    items.length > 0 ? Math.max(...items.map((i) => i.order)) + 1 : 1;
-
+  // Realtime listener
   useEffect(() => {
     const ref = collection(db, "trips", tripId, "itinerary", day.id, "items");
 
@@ -86,20 +57,93 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
     return () => unsubscribe();
   }, [tripId, day.id]);
 
+  // Add item
   const addItem = async () => {
     if (!newItem.trim()) return;
 
-    await addDoc(
-      collection(db, "trips", tripId, "itinerary", day.id, "items"),
-      {
-        name: newItem.trim(),
-        type: "note",
-        order: nextOrder,
-      },
-    );
+    const nextOrder =
+      items.length > 0 ? Math.max(...items.map((i) => i.order)) + 1 : 1;
 
-    setNewItem("");
+    try {
+      await addDoc(
+        collection(db, "trips", tripId, "itinerary", day.id, "items"),
+        {
+          name: newItem.trim(),
+          type: "note",
+          order: nextOrder,
+        },
+      );
+
+      setNewItem("");
+    } catch (err) {
+      console.error("Failed to add item:", err);
+    }
   };
+
+  // Delete item
+  const handleDelete = async (itemId: string) => {
+    try {
+      await deleteDoc(
+        doc(db, "trips", tripId, "itinerary", day.id, "items", itemId),
+      );
+    } catch (err) {
+      console.error("Failed to delete item:", err);
+    }
+  };
+
+  // Start editing
+  const handleEdit = (item: ItineraryItem) => {
+    setEditingItemId(item.id);
+    setEditValue(item.name);
+  };
+
+  // Save edit
+  const handleSaveEdit = async (itemId: string) => {
+    if (!editValue.trim()) return;
+
+    try {
+      await updateDoc(
+        doc(db, "trips", tripId, "itinerary", day.id, "items", itemId),
+        {
+          name: editValue.trim(),
+        },
+      );
+
+      setEditingItemId(null);
+      setEditValue("");
+    } catch (err) {
+      console.error("Failed to update item:", err);
+    }
+  };
+
+  // Optional: reorder items using batched writes
+  // const reorderItems = async (
+  //   reordered: ItineraryItem[]
+  // ) => {
+  //   try {
+  //     const batch = writeBatch(db);
+
+  //     reordered.forEach((item, index) => {
+  //       const ref = doc(
+  //         db,
+  //         "trips",
+  //         tripId,
+  //         "itinerary",
+  //         day.id,
+  //         "items",
+  //         item.id
+  //       );
+
+  //       batch.update(ref, {
+  //         order: index + 1,
+  //       });
+  //     });
+
+  //     await batch.commit();
+  //   } catch (err) {
+  //     console.error("Failed to reorder items:", err);
+  //   }
+  // };
 
   return (
     <div className="bg-white rounded-xl shadow p-4">
@@ -128,6 +172,7 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
             ) : (
               <div className="flex-1">
                 <div className="font-medium">{item.name}</div>
+
                 <div className="text-xs text-gray-500 capitalize">
                   {item.type}
                 </div>
@@ -135,7 +180,6 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
             )}
 
             <div className="flex gap-2 ml-2">
-              {/* Edit */}
               {item.type === "note" && (
                 <button
                   onClick={() => handleEdit(item)}
@@ -144,7 +188,7 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
                   ✏️
                 </button>
               )}
-              {/* Delete */}
+
               <button
                 onClick={() => handleDelete(item.id)}
                 className="text-sm hover:bg-red-100 text-red-600 rounded px-2"
@@ -165,9 +209,10 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
           onKeyDown={(e) => e.key === "Enter" && addItem()}
           className="flex-1 border px-3 py-2 rounded-lg"
         />
+
         <button
           onClick={addItem}
-          className="px-4 hover:bg-blue-200 text-white rounded-lg"
+          className="px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
         >
           ➕
         </button>

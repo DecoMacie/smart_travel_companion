@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getTripById, Trip } from "../../services/firebase/trips";
 import TripMap from "../../components/map/TripMap";
@@ -9,6 +9,9 @@ import {
   doc,
   deleteDoc,
   addDoc,
+  query,
+  orderBy,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../services/firebase/firebase";
 import { Place, ItineraryDayType } from "../../utils/types";
@@ -22,6 +25,20 @@ import { useAuth } from "../../context/AuthContext";
 
 const FILTERS = ["restaurant", "hotel", "attraction"] as const;
 type FilterType = (typeof FILTERS)[number];
+
+const Section: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="bg-white rounded-2xl shadow-sm p-5 mt-8">{children}</div>
+);
+
+const SubSection: React.FC<{ title: string; children: React.ReactNode }> = ({
+  title,
+  children,
+}) => (
+  <div className="bg-white rounded-2xl shadow-sm p-5 mt-6">
+    <h2 className="text-lg font-semibold mb-3">{title}</h2>
+    {children}
+  </div>
+);
 
 const TripDetails: React.FC = () => {
   const { id } = useParams();
@@ -40,7 +57,7 @@ const TripDetails: React.FC = () => {
   const [showDayModal, setShowDayModal] = useState(false);
   const [days, setDays] = useState<ItineraryDayType[]>([]);
 
-  const mergedPlaces = React.useMemo(() => {
+  const mergedPlaces = useMemo(() => {
     const savedCoords = new Set(places.map((p) => `${p.lat}-${p.lon}`));
 
     return [
@@ -93,26 +110,24 @@ const TripDetails: React.FC = () => {
     loadPlaces(trip.id);
   };
 
-  const loadDays = async (tripId: string) => {
-    try {
-      const ref = collection(db, "trips", tripId, "itinerary");
-      const snapshot = await getDocs(ref);
+  useEffect(() => {
+    if (!trip?.id) return;
 
-      const list: ItineraryDayType[] = snapshot.docs.map((doc) => {
-        const data = doc.data() as Omit<ItineraryDayType, "id">;
+    const ref = collection(db, "trips", trip.id, "itinerary");
 
-        return {
-          id: doc.id,
-          dayNumber: data.dayNumber,
-          date: data.date ?? null,
-        };
-      });
+    const q = query(ref, orderBy("dayNumber", "asc"));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const list: ItineraryDayType[] = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<ItineraryDayType, "id">),
+      }));
 
       setDays(list);
-    } catch (err) {
-      console.error("Failed to load days:", err);
-    }
-  };
+    });
+
+    return () => unsubscribe();
+  }, [trip?.id]);
 
   const handleSelectDay = async (day: ItineraryDayType) => {
     if (!trip?.id || !selectedPlace) return;
@@ -142,14 +157,6 @@ const TripDetails: React.FC = () => {
       console.error("Failed to add to itinerary:", err);
     }
   };
-
-  // LOAD ITINERARY DAYS
-  // ----------------------------
-  useEffect(() => {
-    if (!user || !trip?.id) return;
-
-    loadDays(trip.id);
-  }, [user, trip?.id]);
   // ----------------------------
 
   // LOAD EXTERNAL PLACES (Overpass / Cache)
@@ -249,20 +256,6 @@ const TripDetails: React.FC = () => {
       trip.startDate,
       trip.endDate,
     );
-
-  const Section: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-    <div className="bg-white rounded-2xl shadow-sm p-5 mt-8">{children}</div>
-  );
-
-  const SubSection: React.FC<{ title: string; children: React.ReactNode }> = ({
-    title,
-    children,
-  }) => (
-    <div className="bg-white rounded-2xl shadow-sm p-5 mt-6">
-      <h2 className="text-lg font-semibold mb-3">{title}</h2>
-      {children}
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -386,10 +379,7 @@ const TripDetails: React.FC = () => {
                           key={place.id}
                           place={place}
                           getHotelLink={getHotelLink}
-                          onAddToDay={async (p) => {
-                            if (trip?.id) {
-                              await loadDays(trip.id); // ensure fresh data
-                            }
+                          onAddToDay={(p) => {
                             setSelectedPlace(p);
                             setShowDayModal(true);
                           }}
@@ -413,6 +403,7 @@ const TripDetails: React.FC = () => {
             tripId={trip.id}
             startDate={trip.startDate}
             endDate={trip.endDate}
+            days={days}
           />
         </Section>
 
