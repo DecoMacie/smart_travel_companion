@@ -1,8 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getTripById, Trip } from "../../services/firebase/trips";
-import TripMap from "../../components/map/TripMap";
-import AddPlaceModal from "../../components/places/AddPlaceModal";
 import {
   collection,
   getDocs,
@@ -13,6 +10,9 @@ import {
   orderBy,
   onSnapshot,
 } from "firebase/firestore";
+import { getTripById, Trip } from "../../services/firebase/trips";
+import TripMap from "../../components/map/TripMap";
+import AddPlaceModal from "../../components/places/AddPlaceModal";
 import { db } from "../../services/firebase/firebase";
 import { Place, ItineraryDayType } from "../../utils/types";
 import PlaceCard from "../../components/places/PlaceCard";
@@ -22,6 +22,7 @@ import { getCachedPlaces } from "../../utils/getCachedPlaces";
 import AddToDayModal from "../../components/itinerary/AddToDayModal";
 import { buildBookingLink } from "../../utils/hotelLinks";
 import { useAuth } from "../../context/AuthContext";
+import { fetchTripWeather, WeatherDay } from "../../services/weather/weather";
 
 const FILTERS = ["restaurant", "hotel", "attraction"] as const;
 type FilterType = (typeof FILTERS)[number];
@@ -56,6 +57,8 @@ const TripDetails: React.FC = () => {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [showDayModal, setShowDayModal] = useState(false);
   const [days, setDays] = useState<ItineraryDayType[]>([]);
+
+  const [weather, setWeather] = useState<WeatherDay[]>([]);
 
   const mergedPlaces = useMemo(() => {
     const savedCoords = new Set(places.map((p) => `${p.lat}-${p.lon}`));
@@ -159,6 +162,30 @@ const TripDetails: React.FC = () => {
   };
   // ----------------------------
 
+  // LOAD WEATHER (WeatherAPI)
+  // ----------------------------
+  useEffect(() => {
+    if (!trip?.destination) return;
+
+    const loadWeather = async () => {
+      try {
+        const data = await fetchTripWeather(
+          trip.destination.lat,
+          trip.destination.lon,
+          trip.startDate,
+          trip.endDate,
+        );
+
+        setWeather(data);
+      } catch (err) {
+        console.error("Weather failed:", err);
+      }
+    };
+
+    loadWeather();
+  }, [trip]);
+  // ----------------------------
+
   // LOAD EXTERNAL PLACES (Overpass / Cache)
   // ----------------------------
   useEffect(() => {
@@ -215,8 +242,6 @@ const TripDetails: React.FC = () => {
         setLoading(false);
       }
     };
-
-    console.log("User UID:", user?.uid);
 
     loadTrip();
   }, [user, id, authLoading]);
@@ -404,6 +429,7 @@ const TripDetails: React.FC = () => {
             startDate={trip.startDate}
             endDate={trip.endDate}
             days={days}
+            weather={weather}
           />
         </Section>
 

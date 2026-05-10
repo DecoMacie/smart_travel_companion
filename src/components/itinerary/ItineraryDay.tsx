@@ -12,7 +12,7 @@ import {
   updateDoc,
   // writeBatch, //for future batch processes (reorder)
 } from "firebase/firestore";
-
+import { WeatherDay } from "../../services/weather/weather";
 import { ItineraryDayType } from "../../utils/types";
 
 interface ItineraryItem {
@@ -29,9 +29,14 @@ interface ItineraryItem {
 interface ItineraryDayProps {
   tripId: string;
   day: ItineraryDayType;
+  weather?: WeatherDay;
 }
 
-const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
+const ItineraryDay: React.FC<ItineraryDayProps> = ({
+  tripId,
+  day,
+  weather,
+}) => {
   const [items, setItems] = useState<ItineraryItem[]>([]);
   const [newItem, setNewItem] = useState("");
 
@@ -147,14 +152,44 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
 
   return (
     <div className="bg-white rounded-xl shadow p-4">
-      <h4 className="font-semibold mb-3">
-        Day {day.dayNumber}
-        {day.date && (
-          <span className="ml-2 text-sm text-gray-500">({day.date})</span>
-        )}
-      </h4>
+      {/* Header */}
+      <div className="flex justify-between items-start mb-4">
+        <div>
+          <h4 className="font-semibold text-lg">Day {day.dayNumber}</h4>
 
-      <div className="space-y-2 mb-3">
+          {day.date && <p className="text-sm text-gray-500">{day.date}</p>}
+        </div>
+
+        {/* Weather */}
+        <div className="flex items-center gap-2 bg-blue-50 px-3 py-2 rounded-lg min-w-[110px] justify-center">
+          {weather ? (
+            <>
+              <img
+                src={weather.icon}
+                alt={weather.condition}
+                className="w-8 h-8"
+              />
+
+              <div className="text-right leading-tight">
+                <div className="text-sm font-medium text-gray-700">
+                  {Math.round(weather.temp)}°C
+                </div>
+
+                <div className="text-xs text-gray-500">{weather.condition}</div>
+              </div>
+            </>
+          ) : (
+            <div className="flex flex-col items-center text-gray-400 leading-tight">
+              <span className="text-xl">☁️</span>
+
+              <span className="text-xs">Unavailable</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Items */}
+      <div className="space-y-2 mb-4">
         {items.map((item) => (
           <div
             key={item.id}
@@ -200,6 +235,7 @@ const ItineraryDay: React.FC<ItineraryDayProps> = ({ tripId, day }) => {
         ))}
       </div>
 
+      {/* Add item */}
       <div className="flex gap-2">
         <input
           type="text"

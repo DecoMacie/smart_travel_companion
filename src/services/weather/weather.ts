@@ -30,6 +30,15 @@ export const fetchTripWeather = async (
   startDate: string,
   endDate: string
 ): Promise<WeatherDay[]> => {
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    const tripStart = new Date(startDate);
+
+    if (tripStart < today) {
+        return [];
+    }
   const days =
     Math.ceil(
       (new Date(endDate).getTime() -

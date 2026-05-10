@@ -1,20 +1,17 @@
 import React, { useEffect } from "react";
-
 import { db } from "../../services/firebase/firebase";
-
 import { collection, writeBatch, doc, getDocs } from "firebase/firestore";
-
 import ItineraryDay from "./ItineraryDay";
-
 import { ItineraryDayType } from "../../utils/types";
-
 import { generateTripDays } from "../../utils/generateTripDays";
+import { WeatherDay } from "../../services/weather/weather";
 
 interface ItineraryProps {
   tripId: string;
   startDate: string;
   endDate: string;
   days: ItineraryDayType[];
+  weather: WeatherDay[];
 }
 
 const Itinerary: React.FC<ItineraryProps> = ({
@@ -22,6 +19,7 @@ const Itinerary: React.FC<ItineraryProps> = ({
   startDate,
   endDate,
   days,
+  weather,
 }) => {
   // Create itinerary docs once
   useEffect(() => {
@@ -60,15 +58,26 @@ const Itinerary: React.FC<ItineraryProps> = ({
 
     createDaysIfNeeded();
   }, [tripId, startDate, endDate]);
+  console.log("weather", weather);
+  console.log("days", days);
 
   return (
     <div className="mt-6 p-4 bg-white rounded-xl shadow">
       <h3 className="text-lg font-semibold mb-4">Itinerary</h3>
 
       <div className="space-y-4">
-        {days.map((day) => (
-          <ItineraryDay key={day.id} tripId={tripId} day={day} />
-        ))}
+        {days.map((day) => {
+          const weatherDay = weather.find((w) => w.date === day.date);
+
+          return (
+            <ItineraryDay
+              key={day.id}
+              tripId={tripId}
+              day={day}
+              weather={weatherDay}
+            />
+          );
+        })}
       </div>
     </div>
   );
